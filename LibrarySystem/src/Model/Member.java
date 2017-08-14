@@ -12,7 +12,7 @@ import java.util.Date;
  * @author Rom
  */
 public class Member extends Person {
-
+    private int memberId;
     private Date birthdate;
 
     public Member(int id, String firstName, String lastName, String emailAddress, String contactNumber, String address, String suburb, String city, String postalCode, boolean activated) {

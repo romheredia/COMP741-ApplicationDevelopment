@@ -5,6 +5,9 @@
  */
 package GUI;
 
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 
 /**
@@ -142,6 +145,10 @@ public class ApplicationGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void getIFrame(JInternalFrame frame) {
+        if (frame != null) {
+            frame.dispose();
+        }
+
         mainScreenPane.add(frame);
         frame.setVisible(true);
     }
