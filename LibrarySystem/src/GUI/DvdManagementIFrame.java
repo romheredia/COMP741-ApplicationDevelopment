@@ -5,11 +5,23 @@
  */
 package GUI;
 
+import Model.Catalogue;
+import Model.Dvd;
+import Utility.GUIUtility;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author Rom
  */
 public class DvdManagementIFrame extends javax.swing.JInternalFrame {
+
+    List<Catalogue> listCatalogue = new ArrayList();
+    Dvd selectedDvd = new Dvd();
 
     /**
      * Creates new form DvdManagementIFrame
@@ -29,42 +41,42 @@ public class DvdManagementIFrame extends javax.swing.JInternalFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        memberTable = new javax.swing.JTable();
-        jTextField10 = new javax.swing.JTextField();
+        dvdTable = new javax.swing.JTable();
+        dvdTextField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        dvdPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        firstNameTextField = new javax.swing.JTextField();
+        titleTextField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        lastNameTextField = new javax.swing.JTextField();
+        descriptionTextField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        birthdateDateChooser = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
-        addressTextField = new javax.swing.JTextField();
+        languageTextField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        suburbTextField = new javax.swing.JTextField();
+        distributorTextField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        cityTextField = new javax.swing.JTextField();
+        castTextField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        postalCodeTextField = new javax.swing.JTextField();
+        creditsTextField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        contactNumberTextField = new javax.swing.JTextField();
+        noteTextField = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        addNewButton = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        addButton = new javax.swing.JButton();
+        updateButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        statusComboBox = new javax.swing.JComboBox<>();
+        releaseDatePicker = new org.jdesktop.swingx.JXDatePicker();
 
         setClosable(true);
         setTitle("Dvd Management");
 
-        memberTable.setModel(new javax.swing.table.DefaultTableModel(
+        dvdTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Title", "Author", "Description", "ISBN"
+                "Title", "Distributor", "Description", "Cast"
             }
         ) {
             Class[] types = new Class [] {
@@ -75,12 +87,12 @@ public class DvdManagementIFrame extends javax.swing.JInternalFrame {
                 return types [columnIndex];
             }
         });
-        memberTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        dvdTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                memberTableMouseClicked(evt);
+                dvdTableMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(memberTable);
+        jScrollPane1.setViewportView(dvdTable);
 
         searchButton.setText("Search");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
@@ -89,9 +101,9 @@ public class DvdManagementIFrame extends javax.swing.JInternalFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dvd Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
-        jPanel1.setName(""); // NOI18N
-        jPanel1.setPreferredSize(new java.awt.Dimension(520, 540));
+        dvdPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dvd Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
+        dvdPanel.setName(""); // NOI18N
+        dvdPanel.setPreferredSize(new java.awt.Dimension(520, 540));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("Title");
@@ -124,106 +136,112 @@ public class DvdManagementIFrame extends javax.swing.JInternalFrame {
         jPanel3.setPreferredSize(new java.awt.Dimension(264, 80));
         jPanel3.setLayout(new java.awt.GridLayout(2, 2));
 
-        addNewButton.setText("Add New");
-        addNewButton.addActionListener(new java.awt.event.ActionListener() {
+        addButton.setText("Add New");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addNewButtonActionPerformed(evt);
+                addButtonActionPerformed(evt);
             }
         });
-        jPanel3.add(addNewButton);
+        jPanel3.add(addButton);
 
-        jButton3.setText("Update");
-        jPanel3.add(jButton3);
+        updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
+        jPanel3.add(updateButton);
 
-        jButton4.setText("Delete");
-        jPanel3.add(jButton4);
+        deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+        jPanel3.add(deleteButton);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Available", "Borrowed", "Under Maintenance", "Not in Stock", " " }));
+        statusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Available", "Borrowed", "Under Maintenance", "Not in Stock" }));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout dvdPanelLayout = new javax.swing.GroupLayout(dvdPanel);
+        dvdPanel.setLayout(dvdPanelLayout);
+        dvdPanelLayout.setHorizontalGroup(
+            dvdPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dvdPanelLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(78, 78, 78)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(addressTextField)
-                            .addComponent(postalCodeTextField)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addGap(42, 42, 42)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(suburbTextField)
-                            .addComponent(cityTextField)))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(dvdPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
+                    .addGroup(dvdPanelLayout.createSequentialGroup()
+                        .addGroup(dvdPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addComponent(jLabel9))
                         .addGap(67, 67, 67)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(contactNumberTextField)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(dvdPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(noteTextField)
+                            .addComponent(statusComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(dvdPanelLayout.createSequentialGroup()
+                        .addGroup(dvdPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1)
                             .addComponent(jLabel3))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(firstNameTextField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lastNameTextField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(birthdateDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(dvdPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(titleTextField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(descriptionTextField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(releaseDatePicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(dvdPanelLayout.createSequentialGroup()
+                        .addGroup(dvdPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addGap(36, 36, 36)
+                        .addGroup(dvdPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(castTextField)
+                            .addComponent(languageTextField)
+                            .addComponent(distributorTextField)
+                            .addComponent(creditsTextField))))
                 .addGap(20, 20, 20))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        dvdPanelLayout.setVerticalGroup(
+            dvdPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dvdPanelLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(dvdPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(titleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(dvdPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(lastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(descriptionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(dvdPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(birthdateDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(releaseDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(dvdPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(statusComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(contactNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(dvdPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(noteTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(suburbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(dvdPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(languageTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(dvdPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(distributorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(dvdPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(castTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(postalCodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(dvdPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(creditsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -236,12 +254,12 @@ public class DvdManagementIFrame extends javax.swing.JInternalFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dvdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(searchButton))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dvdPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
         jPanel2Layout.setVerticalGroup(
@@ -250,11 +268,11 @@ public class DvdManagementIFrame extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(dvdPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dvdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(searchButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -275,37 +293,190 @@ public class DvdManagementIFrame extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void memberTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_memberTableMouseClicked
-        // TODO add your handling code here:
-        //        int i = memberTable.getSelectedRow();
-        //        TableModel model = memberTable.getModel();
-        //
-        //        firstNameTextField.setText(model.getValueAt(i, 0).toString());
-        //        lastNameTextField.setText(model.getValueAt(i, 1).toString());
-    }//GEN-LAST:event_memberTableMouseClicked
+    private void dvdTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dvdTableMouseClicked
+        try {
+            //Get the current selected table row
+            int i = dvdTable.getSelectedRow();
+
+            //Get the selected book item
+            selectedDvd = (Dvd) listCatalogue.get(i);
+
+            //Add data to the panel controls
+            setDataToComponent(selectedDvd);
+
+            //Set control availability
+            updateButton.setEnabled(true);
+            deleteButton.setEnabled(true);
+            addButton.setEnabled(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_dvdTableMouseClicked
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        // TODO add your handling code here:
-        //        showMember();
+        try {
+            //Get the model of the table
+            DefaultTableModel model = (DefaultTableModel) dvdTable.getModel();
+
+            //Clean the table content
+            model.setRowCount(0);
+
+            //Initialize rows
+            Object[] rows = new Object[4];
+
+            //Initialize object
+            Catalogue catalogue = new Dvd();
+
+            //Search the requested book
+            listCatalogue = dvdTextField.getText().equals("") ? catalogue.Search() : catalogue.SearchByTitle(dvdTextField.getText());
+
+            //Add book data to the columns
+            for (Catalogue c : listCatalogue) {
+                Dvd d = (Dvd) c;
+
+                rows[0] = d.getTitle();
+                rows[1] = d.getDistributor();
+                rows[2] = d.getDescription();
+                rows[3] = d.getCast();
+                model.addRow(rows);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }//GEN-LAST:event_searchButtonActionPerformed
 
-    private void addNewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewButtonActionPerformed
-        // TODO add your handling code here:
-        //        addMember();
-        //        clearMemberDetailsTextField();
-    }//GEN-LAST:event_addNewButtonActionPerformed
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        try {
+            //Check if input data is correct
+            String msg = GUIUtility.validateInput(dvdPanel);
 
+            if (msg.length() == 0) {
+                //Load book object with the panel data
+                Catalogue catalogue = getComponentData(new Dvd());
+
+                //Insert book into the database
+                catalogue.Add();
+
+                //Displays message
+                JOptionPane.showMessageDialog(this, "Dvd registered successfully");
+
+                //Clean data in controls
+                GUIUtility.cleanComponents(dvdPanel);
+            } else {
+                JOptionPane.showMessageDialog(this, msg);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        try {
+            //Message with the field validation
+            String msg = GUIUtility.validateInput(dvdPanel);
+
+            if (msg.length() == 0) {
+                //Get the selected row in the table
+                int i = dvdTable.getSelectedRow();
+
+                //Get the title of the selected item
+                String title = dvdTable.getModel().getValueAt(i, 0).toString();
+
+                //Filter book based on title
+                Dvd dvd = (Dvd) listCatalogue.stream().filter(p -> p.getTitle().equals(title)).findFirst().get();
+
+                //Get components data 
+                Catalogue catalogue = getComponentData(dvd);
+
+                //Update book data
+                catalogue.Update();
+
+                //Display message
+                JOptionPane.showMessageDialog(this, "Dvd updated successfully");
+
+                //Clean data in controls
+                GUIUtility.cleanComponents(dvdPanel);
+
+                //Enable buttons
+                addButton.setEnabled(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        try {
+            //Message with the field validation
+            String msg = GUIUtility.validateInput(dvdPanel);
+
+            if (msg.length() == 0) {
+                //Get the selected row in the table
+                int i = dvdTable.getSelectedRow();
+
+                //Get the current table data
+                TableModel model = dvdTable.getModel();
+
+                //Get the title of the selected item
+                String title = model.getValueAt(i, 0).toString();
+
+                //Initialize objects
+                Catalogue catalogue = new Dvd();
+
+                //Filter book based on title
+                int id = ((Dvd) (listCatalogue.stream().filter(p -> p.getTitle().equals(title)).findFirst().get())).getId();
+
+                //Update book data
+                catalogue.Delete(id);
+
+                //Display message
+                JOptionPane.showMessageDialog(this, "Dvd deleted successfully");
+
+                //Clean data in controls
+                GUIUtility.cleanComponents(dvdPanel);
+
+                //Enable buttons
+                addButton.setEnabled(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private Dvd getComponentData(Dvd dvd) throws Exception {
+        dvd.setTitle(titleTextField.getText());
+        dvd.setDescription(descriptionTextField.getText());
+        dvd.setReleaseDate(GUIUtility.convertDateToString(releaseDatePicker.getDate()));
+        dvd.setNote(noteTextField.getText());
+        dvd.setLanguage(languageTextField.getText());
+        dvd.setDistributor(distributorTextField.getText());
+        dvd.setCast(castTextField.getText());
+        dvd.setCredits(creditsTextField.getText());
+
+        return dvd;
+    }
+
+    private void setDataToComponent(Dvd dvd) throws Exception {
+        titleTextField.setText(dvd.getTitle());
+        descriptionTextField.setText(dvd.getDescription());
+        releaseDatePicker.setDate(GUIUtility.convertToDate(dvd.getReleaseDate()));
+        noteTextField.setText(dvd.getNote());
+        languageTextField.setText(dvd.getLanguage());
+        distributorTextField.setText(dvd.getDistributor());
+        castTextField.setText(dvd.getCast());
+        creditsTextField.setText(dvd.getCredits());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addNewButton;
-    private javax.swing.JTextField addressTextField;
-    private com.toedter.calendar.JDateChooser birthdateDateChooser;
-    private javax.swing.JTextField cityTextField;
-    private javax.swing.JTextField contactNumberTextField;
-    private javax.swing.JTextField firstNameTextField;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton addButton;
+    private javax.swing.JTextField castTextField;
+    private javax.swing.JTextField creditsTextField;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JTextField descriptionTextField;
+    private javax.swing.JTextField distributorTextField;
+    private javax.swing.JPanel dvdPanel;
+    private javax.swing.JTable dvdTable;
+    private javax.swing.JTextField dvdTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -315,15 +486,15 @@ public class DvdManagementIFrame extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField lastNameTextField;
-    private javax.swing.JTable memberTable;
-    private javax.swing.JTextField postalCodeTextField;
+    private javax.swing.JTextField languageTextField;
+    private javax.swing.JTextField noteTextField;
+    private org.jdesktop.swingx.JXDatePicker releaseDatePicker;
     private javax.swing.JButton searchButton;
-    private javax.swing.JTextField suburbTextField;
+    private javax.swing.JComboBox<String> statusComboBox;
+    private javax.swing.JTextField titleTextField;
+    private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
 }

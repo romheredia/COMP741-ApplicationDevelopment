@@ -5,6 +5,8 @@
  */
 package Model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Rom
@@ -13,11 +15,23 @@ public abstract class Catalogue {
 
     private String title;
     private String description;
-    private String type;
     private String releaseDate;
     private String status;
     private String note;
     private String language;
+
+    public Catalogue(String title, String description, String releaseDate, String status, String note, String language) {
+        this.title = title;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.status = status;
+        this.note = note;
+        this.language = language;
+    }
+
+    public Catalogue() {
+
+    }
 
     public String getTitle() {
         return title;
@@ -35,14 +49,6 @@ public abstract class Catalogue {
         this.description = description;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getReleaseDate() {
         return releaseDate;
     }
@@ -56,8 +62,7 @@ public abstract class Catalogue {
     }
 
     public void setStatus(String status) throws Exception {
-        
-        if (status.equals("available") || status.equals("out") || status.equals("undermaintenance")) {
+        if (status.equals("Available") || status.equals("Borrowed") || status.equals("Under Maintenance") || status.equals("Not in Stock")) {
             this.status = status;
         } else {
             throw new Exception("Please enter correct status");
@@ -80,4 +85,13 @@ public abstract class Catalogue {
         this.language = language;
     }
 
+    public abstract void  Add() throws Exception;
+    
+    public abstract void Update() throws Exception;
+    
+    public abstract void Delete(int id) throws Exception;
+    
+    public abstract ArrayList<Catalogue> Search() throws Exception;
+    
+    public abstract ArrayList<Catalogue> SearchByTitle(String title) throws Exception;
 }

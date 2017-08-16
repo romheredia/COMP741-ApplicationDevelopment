@@ -5,11 +5,13 @@
  */
 package GUI;
 
-import DAL.Database;
 import DAL.MemberDAL;
 import Model.Member;
+import Model.Person;
+import Utility.GUIUtility;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -19,6 +21,9 @@ import javax.swing.table.TableModel;
  * @author Rom
  */
 public class MemberManagementIFrame extends javax.swing.JInternalFrame {
+
+    List<Person> listPerson = new ArrayList();
+    Member selectedMember = new Member();
 
     /**
      * Creates new form MemberManagementInternalFrame
@@ -41,13 +46,12 @@ public class MemberManagementIFrame extends javax.swing.JInternalFrame {
         memberTable = new javax.swing.JTable();
         searchTextField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        memberPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         firstNameTextField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         lastNameTextField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        birthdateDateChooser = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
         addressTextField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -61,10 +65,11 @@ public class MemberManagementIFrame extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         contactNumberTextField = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        addNewButton = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
         updateButton = new javax.swing.JButton();
         activationButton = new javax.swing.JButton();
         transactionHistoryButton = new javax.swing.JButton();
+        birthDatePicker = new org.jdesktop.swingx.JXDatePicker();
 
         setClosable(true);
         setTitle("Member Management");
@@ -103,15 +108,19 @@ public class MemberManagementIFrame extends javax.swing.JInternalFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Member Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
-        jPanel1.setName(""); // NOI18N
-        jPanel1.setPreferredSize(new java.awt.Dimension(520, 540));
+        memberPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Member Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
+        memberPanel.setName(""); // NOI18N
+        memberPanel.setPreferredSize(new java.awt.Dimension(520, 540));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setText("First Name");
 
+        firstNameTextField.setName("firstName"); // NOI18N
+
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Last Name");
+
+        lastNameTextField.setName("lastName"); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setText("Birthdate");
@@ -119,129 +128,153 @@ public class MemberManagementIFrame extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setText("Address");
 
+        addressTextField.setName("address"); // NOI18N
+
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setText("Suburb");
+
+        suburbTextField.setName("suburb"); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setText("City");
 
+        cityTextField.setName("city"); // NOI18N
+
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel7.setText("Postal Code");
+
+        postalCodeTextField.setName("postalCode"); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel8.setText("Email Address");
 
+        emailAddressTextField.setName("emailAddress"); // NOI18N
+
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel9.setText("Contact Number");
 
+        contactNumberTextField.setName("contactNumber"); // NOI18N
+
         jPanel3.setLayout(new java.awt.GridLayout(2, 2));
 
-        addNewButton.setText("Add New");
-        addNewButton.addActionListener(new java.awt.event.ActionListener() {
+        addButton.setText("Add New");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addNewButtonActionPerformed(evt);
+                addButtonActionPerformed(evt);
             }
         });
-        jPanel3.add(addNewButton);
+        jPanel3.add(addButton);
 
         updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
         jPanel3.add(updateButton);
 
         activationButton.setBackground(new java.awt.Color(204, 0, 0));
         activationButton.setForeground(new java.awt.Color(255, 255, 255));
         activationButton.setText("Deactivate");
+        activationButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                activationButtonActionPerformed(evt);
+            }
+        });
         jPanel3.add(activationButton);
 
         transactionHistoryButton.setText("Transaction History");
         jPanel3.add(transactionHistoryButton);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        birthDatePicker.setName("birthDate"); // NOI18N
+
+        javax.swing.GroupLayout memberPanelLayout = new javax.swing.GroupLayout(memberPanel);
+        memberPanel.setLayout(memberPanelLayout);
+        memberPanelLayout.setHorizontalGroup(
+            memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, memberPanelLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(memberPanelLayout.createSequentialGroup()
+                        .addGroup(memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5))
                         .addGap(73, 73, 73)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(addressTextField)
                             .addComponent(suburbTextField)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(memberPanelLayout.createSequentialGroup()
+                        .addGroup(memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(memberPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(47, 47, 47)
                                 .addComponent(postalCodeTextField))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(memberPanelLayout.createSequentialGroup()
+                                .addGroup(memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel9)
                                     .addComponent(jLabel8))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(contactNumberTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
                                     .addComponent(emailAddressTextField)))
                             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(memberPanelLayout.createSequentialGroup()
+                                .addGroup(memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel3))
                                 .addGap(57, 57, 57)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lastNameTextField, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(birthdateDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
-                                    .addComponent(firstNameTextField))))
+                                .addGroup(memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lastNameTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                                    .addComponent(firstNameTextField)
+                                    .addComponent(birthDatePicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, memberPanelLayout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(cityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        memberPanelLayout.setVerticalGroup(
+            memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(memberPanelLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(lastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(birthdateDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(emailAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(birthDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(emailAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(contactNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(suburbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(cityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(memberPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(postalCodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -259,7 +292,7 @@ public class MemberManagementIFrame extends javax.swing.JInternalFrame {
                         .addComponent(searchButton))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(memberPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
         jPanel2Layout.setVerticalGroup(
@@ -275,7 +308,7 @@ public class MemberManagementIFrame extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane1))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(memberPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(46, 46, 46))
         );
 
@@ -293,101 +326,200 @@ public class MemberManagementIFrame extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addNewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewButtonActionPerformed
-        // TODO add your handling code here:
-        addMember();
-        clearMemberDetailsTextField();
-    }//GEN-LAST:event_addNewButtonActionPerformed
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        try {
+            //Check if input data is correct
+            String msg = GUIUtility.validateInput(memberPanel);
+
+            if (msg.length() == 0) {
+                //Load book object with the panel data
+                Person person = getComponentData(new Member());
+
+                //Insert book into the database
+                person.Add();
+
+                //Displays message
+                JOptionPane.showMessageDialog(this, "Member registered successfully");
+
+                //Clean data in controls
+                GUIUtility.cleanComponents(memberPanel);
+
+                //Reset the table`s content
+                GUIUtility.cleanTable(memberTable);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_addButtonActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        // TODO add your handling code here:
-        String searchText = searchTextField.getText();
-        searchMembers(searchText);
-    }//GEN-LAST:event_searchButtonActionPerformed
-
-    private void memberTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_memberTableMouseClicked
-        // TODO add your handling code here:
-        int i = memberTable.getSelectedRow();
-        TableModel model = memberTable.getModel();
-
-        firstNameTextField.setText(model.getValueAt(i, 0).toString());
-        lastNameTextField.setText(model.getValueAt(i, 1).toString());
-    }//GEN-LAST:event_memberTableMouseClicked
-
-    public void searchMembers(String searchText) {
-        //ArrayList<Member> members = ApplicationGUI.getMembers();
         try {
-            Database db = new Database();
-            MemberDAL memberDAL = new MemberDAL();
-
-            ArrayList<Member> members = memberDAL.showAllMembers();
-
+            //Get the model of the table
             DefaultTableModel model = (DefaultTableModel) memberTable.getModel();
+
+            //Clean the table content
             model.setRowCount(0);
-            Object[] rows = new Object[4];
-            for (Member m : members) {
+
+            //Initialize rows
+            Object[] rows = new Object[3];
+
+            //Initialize Book object
+            Person person = new Member();
+
+            //Search the requested book
+            listPerson = searchTextField.getText().equals("") ? person.Search() : person.SearchByName(searchTextField.getText());
+
+            //Add book data to the table
+            for (Person p : listPerson) {
+                Member m = (Member) p;
+
                 rows[0] = m.getFirstName();
                 rows[1] = m.getLastName();
                 rows[2] = m.getEmailAddress();
-                rows[3] = m.getContactNumber();
                 model.addRow(rows);
             }
-        } catch(Exception ex)  {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
-    }
+    }//GEN-LAST:event_searchButtonActionPerformed
 
-    public void addMember() {
-
-        String firstName = firstNameTextField.getText();
-        String lastName = lastNameTextField.getText();
-
-        String emailAddress = emailAddressTextField.getText();
-        String contactNumber = contactNumberTextField.getText();
-
-        String address = addressTextField.getText();
-        String suburb = suburbTextField.getText();
-        String city = cityTextField.getText();
-        String postalCode = postalCodeTextField.getText();
-
-        Date birthdate = birthdateDateChooser.getDate();
-
+    private void memberTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_memberTableMouseClicked
         try {
+            //Get the current selected table row
+            int i = memberTable.getSelectedRow();
 
-//            Member member = new Member(firstName, lastName, emailAddress, contactNumber, address, suburb, city, postalCode, birthdate);
-//
-//            ArrayList memberData = ApplicationGUI.getMembers();
-//            memberData.add(member);
-//
-//            JOptionPane.showMessageDialog(this, "Member added successfully!");
+            //Get the selected member item
+            selectedMember = (Member) listPerson.get(i);
 
-        } catch (Exception ex) {
-
+            //Add data to the panel controls
+            setDataToComponent(selectedMember);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
+    }//GEN-LAST:event_memberTableMouseClicked
 
-//        Member member = new Member( firstName, middleName, lastName, emailAddress, contactNumber, address, suburb, city, postalCode);
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        try {
+            //Message with the field validation
+            String msg = GUIUtility.validateInput(memberPanel);
+
+            if (msg.length() == 0) {
+                //Get the selected row in the table
+                int i = memberTable.getSelectedRow();
+
+                //Get the name of the selected item
+                String firstName = memberTable.getModel().getValueAt(i, 0).toString();
+                String lastName = memberTable.getModel().getValueAt(i, 1).toString();
+
+                //Get the selected book
+                Member member = (Member) listPerson.stream().filter(p -> p.getFirstName().equals(firstName) && p.getLastName().equals(lastName)).findFirst().get();
+
+                //Get components data 
+                Person person = getComponentData(member);
+
+                //Update book data
+                person.Update();
+
+                //Display message
+                JOptionPane.showMessageDialog(this, "Member updated successfully");
+
+                //Clean data in controls
+                GUIUtility.cleanComponents(memberPanel);
+
+                //Reset the table`s content
+                GUIUtility.cleanTable(memberTable);
+
+                //Enable buttons
+                addButton.setEnabled(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void activationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activationButtonActionPerformed
+         try {
+            //Message with the field validation
+            String msg = GUIUtility.validateInput(memberPanel);
+
+            if (msg.length() == 0) {
+                //Get the selected row in the table
+                int i = memberTable.getSelectedRow();
+
+                //Get the current table data
+                TableModel model = memberTable.getModel();
+
+                //Get the title of the selected item
+                String firstName = model.getValueAt(i, 0).toString();
+                String lastName = model.getValueAt(i, 1).toString();
+
+                //Initialize objects
+                Person person = new Member();
+
+                //Filter book based on title
+                int id = ((Member) (listPerson.stream().filter(p -> p.getFirstName().equals(firstName)&&p.getLastName().equals(lastName)).findFirst().get())).getId();
+
+                //Update book data
+                person.Deactivate(id);
+
+                //Display message
+                JOptionPane.showMessageDialog(this, "Member deactvated successfully");
+
+                //Clean data in controls
+                GUIUtility.cleanComponents(memberPanel);
+
+                //Enable buttons
+                addButton.setEnabled(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_activationButtonActionPerformed
+
+    /**
+     * Get the data from the components
+     *
+     * @param member object to be filled
+     * @return filled object
+     * @throws Exception
+     */
+    private Member getComponentData(Member member) throws Exception {
+        member.setFirstName(firstNameTextField.getText());
+        member.setLastName(lastNameTextField.getText());
+        member.setBirthdate(GUIUtility.convertDateToString(birthDatePicker.getDate()));
+        member.setEmailAddress(emailAddressTextField.getText());
+        member.setContactNumber(contactNumberTextField.getText());
+        member.setAddress(addressTextField.getText());
+        member.setSuburb(suburbTextField.getText());
+        member.setCity(cityTextField.getText());
+        member.setPostalCode(postalCodeTextField.getText());
+
+        return member;
     }
 
-    //Clears member details textfields
-    public void clearMemberDetailsTextField() {
-        firstNameTextField.setText("");
-        lastNameTextField.setText("");
-        birthdateDateChooser.setCalendar(null);
-
-        emailAddressTextField.setText("");
-        contactNumberTextField.setText("");
-
-        addressTextField.setText("");
-        suburbTextField.setText("");
-        cityTextField.setText("");
-        postalCodeTextField.setText("");
+    /**
+     * Set data from the object to the components of the GUI
+     *
+     * @param member get data from
+     * @throws Exception
+     */
+    private void setDataToComponent(Member member) throws Exception {
+        firstNameTextField.setText(member.getFirstName());
+        lastNameTextField.setText(member.getLastName());
+        birthDatePicker.setDate(GUIUtility.convertToDate(member.getBirthdate()));
+        emailAddressTextField.setText(member.getEmailAddress());
+        contactNumberTextField.setText(member.getContactNumber());
+        addressTextField.setText(member.getAddress());
+        suburbTextField.setText(member.getSuburb());
+        cityTextField.setText(member.getCity());
+        postalCodeTextField.setText(member.getPostalCode());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton activationButton;
-    private javax.swing.JButton addNewButton;
+    private javax.swing.JButton addButton;
     private javax.swing.JTextField addressTextField;
-    private com.toedter.calendar.JDateChooser birthdateDateChooser;
+    private org.jdesktop.swingx.JXDatePicker birthDatePicker;
     private javax.swing.JTextField cityTextField;
     private javax.swing.JTextField contactNumberTextField;
     private javax.swing.JTextField emailAddressTextField;
@@ -401,11 +533,11 @@ public class MemberManagementIFrame extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField lastNameTextField;
+    private javax.swing.JPanel memberPanel;
     private javax.swing.JTable memberTable;
     private javax.swing.JTextField postalCodeTextField;
     private javax.swing.JButton searchButton;

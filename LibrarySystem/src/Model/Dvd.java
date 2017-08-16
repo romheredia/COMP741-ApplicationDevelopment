@@ -5,12 +5,82 @@
  */
 package Model;
 
+import DAL.DvdDAL;
+import java.util.ArrayList;
+
 /**
  *
  * @author Rom
  */
 public class Dvd extends Catalogue {
+    
+    private int id;
     private String distributor;
     private String cast;
     private String credits;
+
+    public Dvd(int id, String distributor, String cast, String credits, String title, String description, String releaseDate, String status, String note, String language) {
+        super(title, description, releaseDate, status, note, language);
+        this.id = id;
+        this.distributor = distributor;
+        this.cast = cast;
+        this.credits = credits;
+    }
+    
+    public Dvd(){
+        
+    }
+    
+    public int getId(){
+        return id;
+    }
+    
+    public String getDistributor() {
+        return distributor;
+    }
+
+    public void setDistributor(String distributor) {
+        this.distributor = distributor;
+    }
+
+    public String getCast() {
+        return cast;
+    }
+
+    public void setCast(String cast) {
+        this.cast = cast;
+    }
+
+    public String getCredits() {
+        return credits;
+    }
+
+    public void setCredits(String credits) {
+        this.credits = credits;
+    }
+    
+    @Override
+    public void Add() throws Exception{
+        DvdDAL.addBookDvd(this);
+    }
+    
+    @Override
+    public void Update() throws Exception{
+        DvdDAL.updateDvd(this);
+    }
+    
+    @Override
+    public void Delete(int id) throws Exception{
+        DvdDAL.deleteDvd(id);
+    }
+    
+    @Override
+    public ArrayList<Catalogue> Search() throws Exception {
+        return DvdDAL.getAllDvd();
+    }
+
+    @Override
+    public ArrayList<Catalogue> SearchByTitle(String title) throws Exception {
+        return DvdDAL.getDvdByTitle(title);
+    }
 }

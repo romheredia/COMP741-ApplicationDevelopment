@@ -5,6 +5,8 @@
  */
 package Model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Rom
@@ -22,6 +24,7 @@ public abstract class Person {
     private String postalCode;
     private boolean activated;
 
+    
     public Person(int id, String firstName, String lastName, String emailAddress, String contactNumber, String address, String suburb, String city, String postalCode, boolean activated) {
         this.id = id;
         this.firstName = firstName;
@@ -34,55 +37,27 @@ public abstract class Person {
         this.postalCode = postalCode;
         this.activated = activated;
     }
-
-    public Person(String firstName, String lastName, String emailAddress, String contactNumber, String address, String suburb, String city, String postalCode, boolean activated) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.emailAddress = emailAddress;
-        this.contactNumber = contactNumber;
+    
+    public Person(String address, String suburb, String city, String postalCode, String firstName, String lastName, String emailAddress, String contactNumber){
         this.address = address;
         this.suburb = suburb;
         this.city = city;
         this.postalCode = postalCode;
-        this.activated = activated;
-    }
-
-    public Person(int id, String firstName, String lastName, String address, String suburb, String city, String postalCode, boolean activated) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.suburb = suburb;
-        this.city = city;
-        this.postalCode = postalCode;
-        this.activated = activated;
-    }
-
-    public Person(String firstName, String lastName, String address, String suburb, String city, String postalCode, boolean activated) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.suburb = suburb;
-        this.city = city;
-        this.postalCode = postalCode;
-        this.activated = activated;
-    }
-
-    public Person(int id, String firstName, String lastName, String emailAddress, String contactNumber, boolean activated) {
-        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
         this.contactNumber = contactNumber;
-        this.activated = activated;
     }
 
-    public Person(String firstName, String lastName, String emailAddress, String contactNumber, boolean activated) {
+    public Person(String firstName, String lastName, String emailAddress, String contactNumber){
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
         this.contactNumber = contactNumber;
-        this.activated = activated;
+    }
+    
+    public Person(){
+        
     }
 
     public int getId() {
@@ -164,5 +139,14 @@ public abstract class Person {
     public void setActivated(boolean activated) {
         this.activated = activated;
     }
-
+    
+    public abstract  void Add() throws Exception;
+    
+    public abstract void Update() throws Exception;
+    
+    public abstract void Deactivate(int id) throws Exception;
+    
+    public abstract ArrayList<Person> Search() throws Exception;
+    
+    public abstract ArrayList<Person> SearchByName(String name) throws Exception;
 }

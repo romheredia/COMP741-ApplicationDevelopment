@@ -38,12 +38,11 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
         lastNameTextField1 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        addNewButton = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        resetPasswordButton = new javax.swing.JButton();
+        updateButton = new javax.swing.JButton();
+        returnButton = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
         addButton = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        removeButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
         setClosable(true);
@@ -92,21 +91,18 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
         jPanel3.setMaximumSize(new java.awt.Dimension(380, 80));
         jPanel3.setMinimumSize(new java.awt.Dimension(380, 80));
         jPanel3.setPreferredSize(new java.awt.Dimension(380, 80));
-        jPanel3.setLayout(new java.awt.GridLayout(2, 2));
+        jPanel3.setLayout(new java.awt.GridLayout(1, 2));
 
-        addNewButton.setText("Update");
-        addNewButton.addActionListener(new java.awt.event.ActionListener() {
+        updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addNewButtonActionPerformed(evt);
+                updateButtonActionPerformed(evt);
             }
         });
-        jPanel3.add(addNewButton);
+        jPanel3.add(updateButton);
 
-        jButton3.setText("Return");
-        jPanel3.add(jButton3);
-
-        resetPasswordButton.setText("Reset Password");
-        jPanel3.add(resetPasswordButton);
+        returnButton.setText("Return");
+        jPanel3.add(returnButton);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -143,8 +139,8 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(lastNameTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -156,8 +152,8 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setText("Remove");
-        jButton2.setPreferredSize(new java.awt.Dimension(100, 40));
+        removeButton.setText("Remove");
+        removeButton.setPreferredSize(new java.awt.Dimension(100, 40));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setText("Library Member");
@@ -177,7 +173,7 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(removeButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -198,7 +194,7 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(removeButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -227,11 +223,11 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
         //        lastNameTextField.setText(model.getValueAt(i, 1).toString());
     }//GEN-LAST:event_memberTableMouseClicked
 
-    private void addNewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewButtonActionPerformed
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         // TODO add your handling code here:
         //        addMember();
         //        clearMemberDetailsTextField();
-    }//GEN-LAST:event_addNewButtonActionPerformed
+    }//GEN-LAST:event_updateButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
@@ -241,10 +237,7 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
-    private javax.swing.JButton addNewButton;
     private javax.swing.JTextField firstNameTextField;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -256,7 +249,9 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField lastNameTextField1;
     private javax.swing.JTable memberTable;
-    private javax.swing.JButton resetPasswordButton;
+    private javax.swing.JButton removeButton;
+    private javax.swing.JButton returnButton;
+    private javax.swing.JButton updateButton;
     private javax.swing.JTextField usernameTextField;
     // End of variables declaration//GEN-END:variables
 }

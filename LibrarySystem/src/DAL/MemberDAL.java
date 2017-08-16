@@ -6,6 +6,8 @@
 package DAL;
 
 import Model.Member;
+import Model.Person;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,49 +20,86 @@ import java.util.logging.Logger;
  *
  * @author Rom
  */
-public class MemberDAL {
-
-    private Member member;
-
-    private ArrayList<Member> queryMemberList(String sqlQuery) throws Exception {
-
-        ArrayList<Member> memberList = new ArrayList<Member>();
-        Database db = new Database();
-        Connection conn = db.getConnection();
-
-        try {
-
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(sqlQuery);
-
-            while (rs.next()) {
-                member = new Member(rs.getInt("member_id"), rs.getString("first_name"), rs.getString("last_name"),
-                         rs.getDate("birthdate"), rs.getString("email_address"), rs.getString("contact_number"),
-                         rs.getString("address"), rs.getString("suburb"), rs.getString("city"), rs.getString("postal_code"), rs.getBoolean("activated"));
-                memberList.add(member);
-            }
-
-        } catch (SQLException ex) {
-            ex.getMessage();
-        }
-
-        return memberList;
-    }
-
-    public ArrayList<Member> showAllMembers() throws Exception {
-        ArrayList<Member> members = queryMemberList("SELECT * FROM member");
-        return members;
-    }
-
-    public void addMember(Member member) throws Exception {
+public class MemberDAL extends BaseDAL{
+    
+    public static void addMember(Member member) throws Exception {
+          String sql = "call addMember(?,?,?,?,?,?,?,?,?)";
         
+        CallableStatement st = getStatement(sql);
+
+        st.setString(1, member.getFirstName());
+        st.setString(2, member.getLastName());
+        st.setString(3, member.getEmailAddress());
+        st.setString(4, member.getContactNumber());
+        st.setString(5, member.getBirthdate());
+        st.setString(6, member.getAddress());
+        st.setString(7, member.getSuburb());
+        st.setString(8, member.getCity());
+        st.setString(9, member.getPostalCode());
+
+        st.executeQuery();
+    }
+    
+    public static void updateMember(Member member) throws Exception {
+        String sql = "call updateMember(?,?,?,?,?,?,?,?,?,?)";
+        
+        CallableStatement st = getStatement(sql);
+
+        st.setInt(1, member.getId());
+        st.setString(2, member.getFirstName());
+        st.setString(3, member.getLastName());
+        st.setString(4, member.getEmailAddress());
+        st.setString(5, member.getContactNumber());
+        st.setString(6, member.getBirthdate());
+        st.setString(7, member.getAddress());
+        st.setString(8, member.getSuburb());
+        st.setString(9, member.getCity());
+        st.setString(10, member.getPostalCode());
+
+        st.executeQuery();
     }
 
-    public boolean deleteMember(int id) {
-        try {
-            return true;
-        } catch (Exception ex) {
-            return false;
+    public static ArrayList<Person> getAllMember() throws Exception {
+        ArrayList<Person> personList = new ArrayList();
+
+        String sql = "call searchMember()";
+        
+        ResultSet rs = getStatement(sql).executeQuery();
+
+        while (rs.next()) {
+            Member member = new Member(rs.getInt("member_id"), rs.getString("birthdate"), rs.getString("address"), rs.getString("suburb"), rs.getString("city"), rs.getString("postal_code"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("email_address"), rs.getString("contact_number"));
+            personList.add(member);
         }
+
+        return personList;
+    }
+
+    public static ArrayList<Person> getMemberByName(String name) throws Exception {
+        ArrayList<Person> personList = new ArrayList();
+
+        String sql = "call searchMemberByName(?)";
+        
+        CallableStatement st = getStatement(sql);
+
+        st.setString(1, name);
+
+        ResultSet rs = st.executeQuery();
+
+        while (rs.next()) {
+            Member member = new Member(rs.getInt("member_id"), rs.getString("birthdate"), rs.getString("address"), rs.getString("suburb"), rs.getString("city"), rs.getString("postal_code"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("email_address"), rs.getString("contact_number"));
+            personList.add(member);
+        }
+
+        return personList;
+    }
+
+    public static void deactivateMember(int id) throws Exception {
+        String sql = "call deactivateMember(?)";
+        
+        CallableStatement st = getStatement(sql);
+
+        st.setInt(1, id);
+
+        st.executeQuery();
     }
 }
