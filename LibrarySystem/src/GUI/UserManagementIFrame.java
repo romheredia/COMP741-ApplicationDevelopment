@@ -366,7 +366,7 @@ public class UserManagementIFrame extends javax.swing.JInternalFrame {
                 person.Deactivate(id);
 
                 //Display message
-                JOptionPane.showMessageDialog(this, "User deactvated successfully");
+                JOptionPane.showMessageDialog(this, "User deactivated successfully");
 
                 //Clean data in controls
                 GUIUtility.cleanComponents(userPanel);
@@ -419,6 +419,39 @@ public class UserManagementIFrame extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void resetPasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetPasswordButtonActionPerformed
+        try {
+            //Message with the field validation
+            String msg = GUIUtility.validateInput(userPanel);
+
+            if (msg.length() == 0) {
+                //Get the selected row in the table
+                int i = userTable.getSelectedRow();
+
+                //Get the name of the selected item
+                String firstName = userTable.getModel().getValueAt(i, 0).toString();
+                String lastName = userTable.getModel().getValueAt(i, 1).toString();
+
+                //Get the selected user
+                int id = listPerson.stream().filter(p -> p.getFirstName().equals(firstName) && p.getLastName().equals(lastName)).findFirst().get().getId();
+
+                //Instantiate new object
+                User user = new User();
+                
+                //Update book data
+                user.ResetPassword(id);
+                
+                 //Display message
+                JOptionPane.showMessageDialog(this, "Password reseted successfully");
+
+                //Clean data in controls
+                GUIUtility.cleanComponents(userPanel);
+
+                //Reset the table`s content
+                GUIUtility.cleanTable(userTable);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }//GEN-LAST:event_resetPasswordButtonActionPerformed
 
     /**
@@ -434,6 +467,7 @@ public class UserManagementIFrame extends javax.swing.JInternalFrame {
         user.setLastName(lastNameTextField.getText());
         user.setEmailAddress(emailAddressTextField.getText());
         user.setContactNumber(contactNumberTextField.getText());
+        user.setPassword("123"); //Default password
 
         return user;
     }

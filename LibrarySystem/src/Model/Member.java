@@ -8,6 +8,7 @@ package Model;
 import DAL.MemberDAL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Hashtable;
 
 /**
  *
@@ -15,16 +16,14 @@ import java.util.Date;
  */
 public class Member extends Person {
 
-    private int memberId;
     private String birthdate;
 
-    public Member(int id, String firstName, String lastName, String emailAddress, String contactNumber, String address, String suburb, String city, String postalCode, boolean activated) {
+    public Member(int id, String firstName, String lastName, String emailAddress, String contactNumber, String address, String suburb, String city, String postalCode, int activated) {
         super(id, firstName, lastName, emailAddress, contactNumber, address, suburb, city, postalCode, activated);
     }
 
     public Member(int id, String birthDate, String address, String suburb, String city, String postalCode, String fistName, String lastName, String emailAddress, String contactNumber) {
-        super(address, suburb, city, postalCode, fistName, lastName, emailAddress, contactNumber);
-        this.memberId = id;
+        super(id, address, suburb, city, postalCode, fistName, lastName, emailAddress, contactNumber);
         this.birthdate = birthDate;
     }
 
@@ -63,5 +62,9 @@ public class Member extends Person {
     @Override
     public ArrayList<Person> SearchByName(String name) throws Exception {
         return MemberDAL.getMemberByName(name);
+    }
+    
+    public ArrayList<String> SearchMemberName() throws Exception{
+        return MemberDAL.getAllMemberName();
     }
 }

@@ -13,6 +13,7 @@ import java.util.ArrayList;
  */
 public abstract class Catalogue {
 
+    private int id;
     private String title;
     private String description;
     private String releaseDate;
@@ -29,10 +30,24 @@ public abstract class Catalogue {
         this.language = language;
     }
 
+     public Catalogue(int id, String title, String description, String releaseDate, String status, String note, String language) {
+         this.id = id;
+        this.title = title;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.status = status;
+        this.note = note;
+        this.language = language;
+    }
+     
     public Catalogue() {
 
     }
 
+    public int getId(){
+        return id;
+    }
+    
     public String getTitle() {
         return title;
     }
@@ -94,4 +109,20 @@ public abstract class Catalogue {
     public abstract ArrayList<Catalogue> Search() throws Exception;
     
     public abstract ArrayList<Catalogue> SearchByTitle(String title) throws Exception;
+    
+    @Override
+    public boolean equals(Object other){
+        if(!(other instanceof Catalogue)){
+            return false;
+        }
+        
+        Catalogue cat = (Catalogue) other;
+        
+        return this.title.equals(cat.getTitle()) && 
+                    this.description.equals(cat.getDescription()) &&
+                    this.releaseDate.equals(cat.getReleaseDate()) &&
+                    this.status.equals(cat.getStatus()) &&
+                    this.note.equals(cat.getNote()) &&
+                    this.language.equals(cat.getLanguage());
+    }
 }

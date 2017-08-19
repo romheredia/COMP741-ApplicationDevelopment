@@ -33,12 +33,20 @@ public class Book extends Catalogue {
         this.genre = genre;
         this.isbn = isbn;
     }
+    
+    public Book(int catalogueId,int bookId, String author, String genre, String isbn, String title, String description, String releaseDate, String status, String note, String language) {
+        super(catalogueId, title, description, releaseDate, status, note, language);
+        this.id = id;
+        this.author = author;
+        this.genre = genre;
+        this.isbn = isbn;
+    }
 
     public Book() {
 
     }
 
-    public int getId() {
+    public int getBookId() {
         return id;
     }
 
@@ -89,5 +97,18 @@ public class Book extends Catalogue {
     @Override
     public ArrayList<Catalogue> SearchByTitle(String title) throws Exception {
         return BookDAL.getBookByTitle(title);
+    }
+    
+    @Override
+     public boolean equals(Object other){
+        if(!(other instanceof Book)){
+            return false;
+        }
+        
+        Book b = (Book) other;
+        
+        return this.author.equals(b.getAuthor()) &&
+                    this.genre.equals(b.getGenre()) &&
+                    this.isbn.equals(b.getIsbn());
     }
 }

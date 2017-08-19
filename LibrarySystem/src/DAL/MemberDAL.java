@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,11 +21,11 @@ import java.util.logging.Logger;
  *
  * @author Rom
  */
-public class MemberDAL extends BaseDAL{
-    
+public class MemberDAL extends BaseDAL {
+
     public static void addMember(Member member) throws Exception {
-          String sql = "call addMember(?,?,?,?,?,?,?,?,?)";
-        
+        String sql = "call addMember(?,?,?,?,?,?,?,?,?)";
+
         CallableStatement st = getStatement(sql);
 
         st.setString(1, member.getFirstName());
@@ -39,10 +40,10 @@ public class MemberDAL extends BaseDAL{
 
         st.executeQuery();
     }
-    
+
     public static void updateMember(Member member) throws Exception {
         String sql = "call updateMember(?,?,?,?,?,?,?,?,?,?)";
-        
+
         CallableStatement st = getStatement(sql);
 
         st.setInt(1, member.getId());
@@ -63,11 +64,11 @@ public class MemberDAL extends BaseDAL{
         ArrayList<Person> personList = new ArrayList();
 
         String sql = "call searchMember()";
-        
+
         ResultSet rs = getStatement(sql).executeQuery();
 
         while (rs.next()) {
-            Member member = new Member(rs.getInt("member_id"), rs.getString("birthdate"), rs.getString("address"), rs.getString("suburb"), rs.getString("city"), rs.getString("postal_code"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("email_address"), rs.getString("contact_number"));
+            Member member = new Member(rs.getInt("person_id"), rs.getString("birthdate"), rs.getString("address"), rs.getString("suburb"), rs.getString("city"), rs.getString("postal_code"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("email_address"), rs.getString("contact_number"));
             personList.add(member);
         }
 
@@ -78,7 +79,7 @@ public class MemberDAL extends BaseDAL{
         ArrayList<Person> personList = new ArrayList();
 
         String sql = "call searchMemberByName(?)";
-        
+
         CallableStatement st = getStatement(sql);
 
         st.setString(1, name);
@@ -86,7 +87,7 @@ public class MemberDAL extends BaseDAL{
         ResultSet rs = st.executeQuery();
 
         while (rs.next()) {
-            Member member = new Member(rs.getInt("member_id"), rs.getString("birthdate"), rs.getString("address"), rs.getString("suburb"), rs.getString("city"), rs.getString("postal_code"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("email_address"), rs.getString("contact_number"));
+            Member member = new Member(rs.getInt("person_id"), rs.getString("birthdate"), rs.getString("address"), rs.getString("suburb"), rs.getString("city"), rs.getString("postal_code"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("email_address"), rs.getString("contact_number"));
             personList.add(member);
         }
 
@@ -95,11 +96,28 @@ public class MemberDAL extends BaseDAL{
 
     public static void deactivateMember(int id) throws Exception {
         String sql = "call deactivateMember(?)";
-        
+
         CallableStatement st = getStatement(sql);
 
         st.setInt(1, id);
 
         st.executeQuery();
     }
+
+    public static ArrayList<String> getAllMemberName() throws Exception {
+        ArrayList<String> personList = new ArrayList();
+
+        String sql = "call searchPerson()";
+
+        CallableStatement st = getStatement(sql);
+
+        ResultSet rs = st.executeQuery();
+
+        while (rs.next()) {
+            personList.add(rs.getString("name"));
+        }
+
+        return personList;
+    }
+
 }

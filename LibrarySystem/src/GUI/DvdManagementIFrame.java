@@ -447,6 +447,7 @@ public class DvdManagementIFrame extends javax.swing.JInternalFrame {
         dvd.setTitle(titleTextField.getText());
         dvd.setDescription(descriptionTextField.getText());
         dvd.setReleaseDate(GUIUtility.convertDateToString(releaseDatePicker.getDate()));
+        dvd.setStatus(statusComboBox.getSelectedItem().toString());
         dvd.setNote(noteTextField.getText());
         dvd.setLanguage(languageTextField.getText());
         dvd.setDistributor(distributorTextField.getText());

@@ -463,7 +463,7 @@ public class MemberManagementIFrame extends javax.swing.JInternalFrame {
                 person.Deactivate(id);
 
                 //Display message
-                JOptionPane.showMessageDialog(this, "Member deactvated successfully");
+                JOptionPane.showMessageDialog(this, "Member deactivated successfully");
 
                 //Clean data in controls
                 GUIUtility.cleanComponents(memberPanel);

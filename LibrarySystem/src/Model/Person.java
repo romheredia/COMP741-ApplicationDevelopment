@@ -22,10 +22,10 @@ public abstract class Person {
     private String suburb;
     private String city;
     private String postalCode;
-    private boolean activated;
+    private int activated;
 
     
-    public Person(int id, String firstName, String lastName, String emailAddress, String contactNumber, String address, String suburb, String city, String postalCode, boolean activated) {
+    public Person(int id, String firstName, String lastName, String emailAddress, String contactNumber, String address, String suburb, String city, String postalCode, int activated) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -38,7 +38,8 @@ public abstract class Person {
         this.activated = activated;
     }
     
-    public Person(String address, String suburb, String city, String postalCode, String firstName, String lastName, String emailAddress, String contactNumber){
+    public Person(int id, String address, String suburb, String city, String postalCode, String firstName, String lastName, String emailAddress, String contactNumber){
+        this.id = id;
         this.address = address;
         this.suburb = suburb;
         this.city = city;
@@ -49,7 +50,8 @@ public abstract class Person {
         this.contactNumber = contactNumber;
     }
 
-    public Person(String firstName, String lastName, String emailAddress, String contactNumber){
+    public Person(int id, String firstName, String lastName, String emailAddress, String contactNumber){
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
@@ -62,10 +64,6 @@ public abstract class Person {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -132,11 +130,11 @@ public abstract class Person {
         this.postalCode = postalCode;
     }
 
-    public boolean isActivated() {
+    public int  getActivated() {
         return activated;
     }
 
-    public void setActivated(boolean activated) {
+    public void setActivated(int activated) {
         this.activated = activated;
     }
     

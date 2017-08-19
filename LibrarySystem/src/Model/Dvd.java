@@ -27,11 +27,19 @@ public class Dvd extends Catalogue {
         this.credits = credits;
     }
     
+    public Dvd(int catalogueId, int id, String distributor, String cast, String credits, String title, String description, String releaseDate, String status, String note, String language) {
+        super(catalogueId, title, description, releaseDate, status, note, language);
+        this.id = id;
+        this.distributor = distributor;
+        this.cast = cast;
+        this.credits = credits;
+    }
+    
     public Dvd(){
         
     }
     
-    public int getId(){
+    public int getDvdId(){
         return id;
     }
     

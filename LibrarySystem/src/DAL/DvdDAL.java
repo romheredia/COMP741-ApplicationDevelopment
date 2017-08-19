@@ -63,7 +63,7 @@ public class DvdDAL extends BaseDAL {
         ResultSet rs = getStatement(sql).executeQuery();
 
         while (rs.next()) {
-            Dvd dvd = new Dvd(rs.getInt("dvd_id"), rs.getString("distributor"), rs.getString("cast"), rs.getString("credits"), rs.getString("title"), rs.getString("description"), rs.getString("release_date"), rs.getString("status"), rs.getString("note"), rs.getString("language"));
+            Dvd dvd = new Dvd(rs.getInt("catalogue_id") ,rs.getInt("dvd_id"), rs.getString("distributor"), rs.getString("cast"), rs.getString("credits"), rs.getString("title"), rs.getString("description"), rs.getString("release_date"), rs.getString("status"), rs.getString("note"), rs.getString("language"));
             catalogueList.add(dvd);
         }
 
@@ -82,7 +82,7 @@ public class DvdDAL extends BaseDAL {
         ResultSet rs = st.executeQuery();
 
         while (rs.next()) {
-            Dvd dvd = new Dvd(rs.getInt("dvd_id"), rs.getString("distributor"), rs.getString("cast"), rs.getString("credits"), rs.getString("title"), rs.getString("description"), rs.getString("release_date"), rs.getString("status"), rs.getString("note"), rs.getString("language"));
+            Dvd dvd = new Dvd(rs.getInt("catalogue_id"), rs.getInt("dvd_id"), rs.getString("distributor"), rs.getString("cast"), rs.getString("credits"), rs.getString("title"), rs.getString("description"), rs.getString("release_date"), rs.getString("status"), rs.getString("note"), rs.getString("language"));
             catalogueList.add(dvd);
         }
 

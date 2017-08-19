@@ -65,7 +65,7 @@ public class BookDAL extends BaseDAL {
         ResultSet rs = getStatement(sql).executeQuery();
 
         while (rs.next()) {
-            Book book = new Book(rs.getInt("book_id"), rs.getString("author"), rs.getString("genre"), rs.getString("isbn"), rs.getString("title"), rs.getString("description"), rs.getString("release_date"), rs.getString("status"), rs.getString("note"), rs.getString("language"));
+            Book book = new Book(rs.getInt("catalogue_id"), rs.getInt("book_id"), rs.getString("author"), rs.getString("genre"), rs.getString("isbn"), rs.getString("title"), rs.getString("description"), rs.getString("release_date"), rs.getString("status"), rs.getString("note"), rs.getString("language"));
             catalogueList.add(book);
         }
 
@@ -84,7 +84,7 @@ public class BookDAL extends BaseDAL {
         ResultSet rs = st.executeQuery();
 
         while (rs.next()) {
-            Book book = new Book(rs.getInt("book_id"), rs.getString("author"), rs.getString("genre"), rs.getString("isbn"), rs.getString("title"), rs.getString("description"), rs.getString("release_date"), rs.getString("status"), rs.getString("note"), rs.getString("language"));
+            Book book = new Book(rs.getInt("catalogue_id"), rs.getInt("book_id"), rs.getString("author"), rs.getString("genre"), rs.getString("isbn"), rs.getString("title"), rs.getString("description"), rs.getString("release_date"), rs.getString("status"), rs.getString("note"), rs.getString("language"));
             catalogueList.add(book);
         }
 
