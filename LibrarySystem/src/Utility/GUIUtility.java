@@ -85,6 +85,10 @@ public class GUIUtility {
         return data;
     }
     
+    /**
+     * Clean the components of the selected panel
+     * @param panel 
+     */
     public static void cleanComponents(JPanel panel){
         Hashtable<String, String> data = new Hashtable<String, String>();
 
@@ -107,16 +111,32 @@ public class GUIUtility {
         }
     }
     
+    /**
+     * Convert String to Date format
+     * @param date String to be converted
+     * @return formated String
+     * @throws Exception 
+     */
     public static Date convertToDate(String date) throws Exception{
         Calendar startDate = javax.xml.bind.DatatypeConverter.parseDateTime(date);
         return startDate.getTime();
     }
     
+    /**
+     * Convert Date to String 
+     * @param date Date to to be formated
+     * @return formated String
+     */
     public static String convertDateToString(Date date){
          DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
          return format.format(date);
     }
     
+    /**
+     * Check if the components are empty
+     * @param panel return the components in the panel
+     * @return message of validation
+     */
     public static String validateInput(JPanel panel){
         Hashtable<String, String> data = retrieveControls(panel);
         String msg = checkInput(data);

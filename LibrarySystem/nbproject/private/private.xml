@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/massami/COMP741-ApplicationDevelopment/LibrarySystem/src/DAL/HistoryDAL.java</file>
-            <file>file:/C:/Users/massami/COMP741-ApplicationDevelopment/LibrarySystem/src/GUI/MemberManagementIFrame.java</file>
-            <file>file:/C:/Users/massami/COMP741-ApplicationDevelopment/LibrarySystem/src/Model/History.java</file>
-            <file>file:/C:/Users/massami/COMP741-ApplicationDevelopment/LibrarySystem/src/GUI/TransactionHistory.java</file>
+            <file>file:/C:/Users/massami/COMP741-ApplicationDevelopment/LibrarySystem/src/GUI/BookSearchFrame.java</file>
+            <file>file:/C:/Users/massami/COMP741-ApplicationDevelopment/LibrarySystem/src/GUI/DvdSearchFrame.java</file>
+            <file>file:/C:/Users/massami/COMP741-ApplicationDevelopment/LibrarySystem/src/GUI/ChangePasswordIFrame.java</file>
+            <file>file:/C:/Users/massami/COMP741-ApplicationDevelopment/LibrarySystem/src/GUI/ApplicationGUI.java</file>
+            <file>file:/C:/Users/massami/COMP741-ApplicationDevelopment/LibrarySystem/src/GUI/Login.java</file>
+            <file>file:/C:/Users/massami/COMP741-ApplicationDevelopment/LibrarySystem/src/librarysystem/LibrarySystem.java</file>
         </group>
     </open-files>
 </project-private>

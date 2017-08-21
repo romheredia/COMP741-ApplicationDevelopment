@@ -358,20 +358,25 @@ public class BookManagementIFrame extends javax.swing.JInternalFrame {
 
             //Initialize Book object
             Catalogue catalogue = new Book();
-            
+
             //Search the requested book
             listCatalogue = bookTextField.getText().equals("") ? catalogue.Search() : catalogue.SearchByTitle(bookTextField.getText());
 
-            //Add book data to the table
-            for (Catalogue c : listCatalogue) {
-                Book b = (Book) c;
+            if (listCatalogue.size() > 0) {
+                //Add book data to the table
+                for (Catalogue c : listCatalogue) {
+                    Book b = (Book) c;
 
-                rows[0] = b.getTitle();
-                rows[1] = b.getAuthor();
-                rows[2] = b.getDescription();
-                rows[3] = b.getIsbn();
-                model.addRow(rows);
+                    rows[0] = b.getTitle();
+                    rows[1] = b.getAuthor();
+                    rows[2] = b.getDescription();
+                    rows[3] = b.getIsbn();
+                    model.addRow(rows);
+                }
+            }else{
+                JOptionPane.showMessageDialog(this, "No book found, please include a book first");
             }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }

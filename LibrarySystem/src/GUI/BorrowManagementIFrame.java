@@ -39,6 +39,8 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
         initComponents();
 
         LoadComboBox();
+
+        LoadTable();
     }
 
     /**
@@ -57,7 +59,12 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         borrowButton = new javax.swing.JButton();
+        returnButton = new javax.swing.JButton();
         dueDatePicker = new org.jdesktop.swingx.JXDatePicker();
+        jLabel12 = new javax.swing.JLabel();
+        titleTextField = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        IdTextField = new javax.swing.JTextField();
         memberComboBox = new javax.swing.JComboBox<>();
         addBookButton = new javax.swing.JButton();
         removeBookButton = new javax.swing.JButton();
@@ -81,7 +88,7 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
                 java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -90,6 +97,11 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        borrowTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                borrowTableMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(borrowTable);
@@ -108,7 +120,7 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
         jPanel3.setPreferredSize(new java.awt.Dimension(380, 80));
         jPanel3.setLayout(new java.awt.GridLayout(1, 2));
 
-        borrowButton.setText("Borrow");
+        borrowButton.setText("Borrow Item");
         borrowButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 borrowButtonActionPerformed(evt);
@@ -116,7 +128,25 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
         });
         jPanel3.add(borrowButton);
 
+        returnButton.setText("Return Item");
+        returnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnButtonActionPerformed(evt);
+            }
+        });
+        jPanel3.add(returnButton);
+
         dueDatePicker.setName("dueDate"); // NOI18N
+
+        jLabel12.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel12.setText("Title");
+
+        titleTextField.setEnabled(false);
+
+        jLabel13.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel13.setText("Id");
+
+        IdTextField.setEditable(false);
 
         javax.swing.GroupLayout borrowPanelLayout = new javax.swing.GroupLayout(borrowPanel);
         borrowPanel.setLayout(borrowPanelLayout);
@@ -127,22 +157,42 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
                 .addGroup(borrowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(borrowPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(18, 18, 18)
-                        .addComponent(dueDatePicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(borrowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel13))
+                        .addGap(38, 38, 38)
+                        .addGroup(borrowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dueDatePicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(titleTextField)
+                            .addComponent(IdTextField))))
                 .addGap(20, 20, 20))
         );
         borrowPanelLayout.setVerticalGroup(
             borrowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(borrowPanelLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(borrowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(22, 22, 22)
+                .addGroup(borrowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel13)
+                    .addComponent(IdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(borrowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel12)
+                    .addComponent(titleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(borrowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel10)
                     .addComponent(dueDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        memberComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                memberComboBoxItemStateChanged(evt);
+            }
+        });
 
         addBookButton.setText("Add Book");
         addBookButton.setPreferredSize(new java.awt.Dimension(100, 40));
@@ -177,11 +227,11 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(memberComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(memberComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addComponent(addDvdButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -237,38 +287,47 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
             String msg = GUIUtility.validateInput(borrowPanel);
 
             if (msg.length() == 0) {
-                //Get the selected row in the table
-                int i = borrowTable.getSelectedRow();
+                if (borrowTable.getSelectedRow() >= 0) {
+                    //Initialize new object
+                    Borrow borrow = new Borrow();
 
-                //Initialize new object
-                Borrow borrow = new Borrow();
+                    //Get the member id
+                    int memberId = borrow.searchMemberId(memberComboBox.getSelectedItem().toString());
 
-                //Get the member id
-                int memberId = borrow.searchMemberId(memberComboBox.getSelectedItem().toString());
-                
-                //Add items from the list
-                for (Catalogue c : listCatalogue) {
-                    borrow.setBorrowDate(GUIUtility.convertDateToString(new Date()));
-                    borrow.setDueDate(GUIUtility.convertDateToString(dueDatePicker.getDate()));
-                    borrow.setMemberId(memberId);
-                    borrow.setCatalogueId(c.getId());
-                    
-                    borrow.addBorrow(borrow);
+                    //Get the id of the item
+                    int catalogueId = Integer.parseInt(IdTextField.getText());
+
+                    //Find the selected item
+                    Catalogue selectedItem = listCatalogue.stream().filter(p -> p.getId() == catalogueId).findFirst().get();
+
+                    if (selectedItem.getStatus().equals("Available")) {
+                        //Add items from the list
+                        borrow.setBorrowDate(GUIUtility.convertDateToString(new Date()));
+                        borrow.setDueDate(GUIUtility.convertDateToString(dueDatePicker.getDate()));
+                        borrow.setMemberId(memberId);
+                        borrow.setCatalogueId(selectedItem.getId());
+                        borrow.addBorrow(borrow);
+
+                        //Display message
+                        JOptionPane.showMessageDialog(this, "Item borrowed successfully");
+
+                        //Update the status
+                        listCatalogue.stream().filter(p -> p.getId() == catalogueId).findFirst().get().setStatus("Borrowed");
+
+                        //Clean components
+                        GUIUtility.cleanComponents(borrowPanel);
+
+                        //Update table data
+                        updateTable();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "The selected item is not available");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please select an item");
                 }
-
-                //Display message
-                JOptionPane.showMessageDialog(this, "Item borrowed successfully");
-                
-                //Clean table of books and DVDs
-                GUIUtility.cleanTable(borrowTable);
-                
-                //Clean date
-                GUIUtility.cleanComponents(borrowPanel);
-            }
-            else {
+            } else {
                 JOptionPane.showMessageDialog(this, msg);
             }
-            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
@@ -303,6 +362,92 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
         frame.setVisible(true);
     }//GEN-LAST:event_addDvdButtonActionPerformed
 
+    private void borrowTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrowTableMouseClicked
+        try {
+            //Get the current selected table row
+            int i = borrowTable.getSelectedRow();
+
+            //Get the selected book item
+            Catalogue c = listCatalogue.get(i);
+
+            //Add data to the panel controls
+            setDataToComponent(c);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_borrowTableMouseClicked
+
+    private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
+        try {
+            //No items is selected
+            if (borrowTable.getSelectedRow() >= 0) {
+                //Initialize new object
+                Borrow borrow = new Borrow();
+
+                //Get the member id
+                int memberId = borrow.searchMemberId(memberComboBox.getSelectedItem().toString());
+
+                //Get the id of the item
+                int catalogueId = Integer.parseInt(IdTextField.getText());
+
+                //Find the selected item
+                Catalogue selectedItem = listCatalogue.stream().filter(p -> p.getId() == catalogueId).findFirst().get();
+
+                if (selectedItem.getStatus().equals("Borrowed")) {
+                    //Add items from the list
+                    borrow.setBorrowDate(GUIUtility.convertDateToString(new Date()));
+                    borrow.setMemberId(memberId);
+                    borrow.setCatalogueId(selectedItem.getId());
+                    borrow.returnItem(borrow);
+
+                    //Display message
+                    JOptionPane.showMessageDialog(this, "Item returned successfully");
+
+                    //Update the status
+                    listCatalogue.stream().filter(p -> p.getId() == catalogueId).findFirst().get().setStatus("Available");
+
+                    //Clean components
+                    GUIUtility.cleanComponents(borrowPanel);
+
+                    //Update table data
+                    updateTable();
+                } else {
+                    JOptionPane.showMessageDialog(this, "The item is available to borrow");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Please select an item");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_returnButtonActionPerformed
+
+    private void memberComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_memberComboBoxItemStateChanged
+        try {
+            //Load the table with the items of the member
+            LoadTable();
+
+            //update the items of the table
+            updateTable();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+
+    }//GEN-LAST:event_memberComboBoxItemStateChanged
+
+    /**
+     * Load data to the components of the panel
+     *
+     * @param c
+     */
+    private void setDataToComponent(Catalogue c) {
+        IdTextField.setText(String.valueOf(c.getId()));
+        titleTextField.setText(c.getTitle());
+    }
+
+    /**
+     * Load ComboBox with the members
+     */
     private void LoadComboBox() {
         try {
             Member member = new Member();
@@ -316,6 +461,9 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Update table with the catalogue items
+     */
     private void updateTable() {
         //Get the model of the table
         DefaultTableModel model = (DefaultTableModel) borrowTable.getModel();
@@ -335,6 +483,11 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Add item to the list and update the table
+     *
+     * @param cat
+     */
     public void addItem(Catalogue cat) {
         try {
             //Add new book to the catalogue list
@@ -349,7 +502,23 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
         }
     }
 
+    /**
+     * Load the table with items of the member
+     */
+    public void LoadTable() {
+        try {
+            //Initialize object
+            Borrow borrow = new Borrow();
+
+            //Search the transaction book of the user
+            listCatalogue = borrow.searchBorrowedItem(memberComboBox.getSelectedItem().toString());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField IdTextField;
     private javax.swing.JButton addBookButton;
     private javax.swing.JButton addDvdButton;
     private javax.swing.JButton borrowButton;
@@ -357,11 +526,15 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
     private javax.swing.JTable borrowTable;
     private org.jdesktop.swingx.JXDatePicker dueDatePicker;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> memberComboBox;
     private javax.swing.JButton removeBookButton;
+    private javax.swing.JButton returnButton;
+    private javax.swing.JTextField titleTextField;
     // End of variables declaration//GEN-END:variables
 }

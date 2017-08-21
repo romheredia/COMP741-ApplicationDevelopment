@@ -5,6 +5,8 @@
  */
 package librarysystem;
 
+import GUI.Login;
+
 /**
  *
  * @author Rom
@@ -16,6 +18,8 @@ public class LibrarySystem {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Login log = new Login();
+        log.setVisible(true);
     }
     
 }

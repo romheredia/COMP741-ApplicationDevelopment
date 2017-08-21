@@ -19,7 +19,7 @@ public class HistoryDAL extends BaseDAL{
     public static ArrayList<History> getTransactionHistory(String name) throws Exception{
         ArrayList<History> historyList = new ArrayList();
 
-        String sql = "call searchTransactionHistory(?)";
+        String sql = "call sp_searchTransactionHistory(?)";
         
         CallableStatement st = getStatement(sql);
 

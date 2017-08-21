@@ -53,7 +53,7 @@ public class DvdSearchFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         dvdTable = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Search: ");
 
@@ -153,7 +153,7 @@ public class DvdSearchFrame extends javax.swing.JFrame {
             Catalogue catalogue = new Dvd();
 
             //Search the requested book
-            listCatalogue = dvdTextField.getText().equals("") ? catalogue.Search() : catalogue.SearchByTitle(dvdTextField.getText());
+            listCatalogue = dvdTextField.getText().equals("") ? catalogue.SearchAvailableItems(): catalogue.SearchAvailableItemsByTitle(dvdTextField.getText());
 
             //Add book data to the table
             for (Catalogue c : listCatalogue) {

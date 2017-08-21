@@ -44,6 +44,10 @@ public abstract class Catalogue {
 
     }
 
+    public void setId(int id){
+        this.id = id;
+    }
+    
     public int getId(){
         return id;
     }
@@ -109,6 +113,10 @@ public abstract class Catalogue {
     public abstract ArrayList<Catalogue> Search() throws Exception;
     
     public abstract ArrayList<Catalogue> SearchByTitle(String title) throws Exception;
+    
+    public abstract ArrayList<Catalogue> SearchAvailableItems() throws Exception;
+    
+    public abstract ArrayList<Catalogue> SearchAvailableItemsByTitle(String title) throws Exception;
     
     @Override
     public boolean equals(Object other){

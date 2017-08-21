@@ -7,6 +7,7 @@ package GUI;
 
 import Model.Person;
 import Model.User;
+import Shared.SharedData;
 import Utility.GUIUtility;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -211,6 +212,10 @@ public class ChangePasswordIFrame extends javax.swing.JInternalFrame {
         return true;
     }
 
+    /**
+     * Verify if the password is correct
+     * @return statement
+     */
     private boolean checkUserPassword() {
         try {
             //Get components data 
@@ -237,8 +242,11 @@ public class ChangePasswordIFrame extends javax.swing.JInternalFrame {
         }
     }
     
+    /**
+     * Get the username of the member
+     */
     private void getUsername(){
-        usernameLabel.setText("massami");
+        usernameLabel.setText(SharedData.username);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;

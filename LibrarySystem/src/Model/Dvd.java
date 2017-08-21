@@ -18,6 +18,7 @@ public class Dvd extends Catalogue {
     private String distributor;
     private String cast;
     private String credits;
+    private int catalogueId;
 
     public Dvd(int id, String distributor, String cast, String credits, String title, String description, String releaseDate, String status, String note, String language) {
         super(title, description, releaseDate, status, note, language);
@@ -67,6 +68,14 @@ public class Dvd extends Catalogue {
         this.credits = credits;
     }
     
+    public int getCatalogueId(){
+        return this.catalogueId;
+    }
+    
+    public void setCatalogueId(int id){
+        this.catalogueId = id;
+    }
+    
     @Override
     public void Add() throws Exception{
         DvdDAL.addBookDvd(this);
@@ -90,5 +99,15 @@ public class Dvd extends Catalogue {
     @Override
     public ArrayList<Catalogue> SearchByTitle(String title) throws Exception {
         return DvdDAL.getDvdByTitle(title);
+    }
+
+    @Override
+    public ArrayList<Catalogue> SearchAvailableItems() throws Exception {
+        return DvdDAL.getAvailableDvd();
+    }
+
+    @Override
+    public ArrayList<Catalogue> SearchAvailableItemsByTitle(String title) throws Exception {
+        return DvdDAL.getAvailableDvdByTitle(title);
     }
 }

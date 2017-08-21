@@ -155,6 +155,9 @@ public class TransactionHistory extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_searchButtonActionPerformed
 
+    /**
+     * Load members data to the combobox
+     */
       private void LoadComboBox() {
         try {
             Member member = new Member();

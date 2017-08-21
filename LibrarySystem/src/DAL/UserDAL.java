@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class UserDAL extends BaseDAL {
 
     public static void addUser(User user) throws Exception {
-        String sql = "call addUser(?,?,?,?,?,?)";
+        String sql = "call sp_addUser(?,?,?,?,?,?)";
 
         CallableStatement st = getStatement(sql);
 
@@ -33,7 +33,7 @@ public class UserDAL extends BaseDAL {
     }
 
     public static void updateUser(User user) throws Exception {
-        String sql = "call updateUser(?,?,?,?,?,?)";
+        String sql = "call sp_updateUser(?,?,?,?,?,?)";
 
         CallableStatement st = getStatement(sql);
 
@@ -50,7 +50,7 @@ public class UserDAL extends BaseDAL {
     public static ArrayList<Person> getAllUser() throws Exception {
         ArrayList<Person> personList = new ArrayList();
 
-        String sql = "call searchUser()";
+        String sql = "call sp_searchUser()";
 
         ResultSet rs = getStatement(sql).executeQuery();
 
@@ -65,7 +65,7 @@ public class UserDAL extends BaseDAL {
     public static ArrayList<Person> getUserByName(String name) throws Exception {
         ArrayList<Person> personList = new ArrayList();
 
-        String sql = "call searchUserByName(?)";
+        String sql = "call sp_searchUserByName(?)";
 
         CallableStatement st = getStatement(sql);
 
@@ -82,7 +82,7 @@ public class UserDAL extends BaseDAL {
     }
 
     public static void deactivateUser(int id) throws Exception {
-        String sql = "call deactivateUser(?)";
+        String sql = "call sp_deactivateUser(?)";
 
         CallableStatement st = getStatement(sql);
 
@@ -92,7 +92,7 @@ public class UserDAL extends BaseDAL {
     }
 
     public static void updatePassword(String username, String password, String newPassword) throws Exception {
-        String sql = "call updatePassword(?,?,?)";
+        String sql = "call sp_updatePassword(?,?,?)";
 
         CallableStatement st = getStatement(sql);
 
@@ -106,7 +106,7 @@ public class UserDAL extends BaseDAL {
     public static ArrayList<Person> checkPassword(String username, String password) throws Exception {
         ArrayList<Person> personList = new ArrayList();
 
-        String sql = "call checkPassword(?,?)";
+        String sql = "call sp_checkPassword(?,?)";
 
         CallableStatement st = getStatement(sql);
 
@@ -124,7 +124,7 @@ public class UserDAL extends BaseDAL {
     }
 
     public static void resetPassword(int id) throws Exception {
-        String sql = "call resetPassword(?)";
+        String sql = "call sp_resetPassword(?)";
 
         CallableStatement st = getStatement(sql);
 

@@ -36,7 +36,7 @@ public class Book extends Catalogue {
     
     public Book(int catalogueId,int bookId, String author, String genre, String isbn, String title, String description, String releaseDate, String status, String note, String language) {
         super(catalogueId, title, description, releaseDate, status, note, language);
-        this.id = id;
+        this.id = bookId;
         this.author = author;
         this.genre = genre;
         this.isbn = isbn;
@@ -73,7 +73,7 @@ public class Book extends Catalogue {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
-
+    
     @Override
     public void Add() throws Exception {
         BookDAL.addBook(this);
@@ -110,5 +110,15 @@ public class Book extends Catalogue {
         return this.author.equals(b.getAuthor()) &&
                     this.genre.equals(b.getGenre()) &&
                     this.isbn.equals(b.getIsbn());
+    }
+     
+   @Override
+    public ArrayList<Catalogue> SearchAvailableItems() throws Exception {
+        return BookDAL.getAvailableBook();
+    }
+
+    @Override
+    public ArrayList<Catalogue> SearchAvailableItemsByTitle(String title) throws Exception {
+        return BookDAL.getAvailableBookByTitle(title);
     }
 }

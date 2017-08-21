@@ -6,6 +6,7 @@
 package Model;
 
 import DAL.BorrowDAL;
+import java.util.ArrayList;
 
 /**
  *
@@ -84,7 +85,15 @@ public class Borrow {
         BorrowDAL.addBorrow(borrow);
     }
     
+    public void returnItem(Borrow borrow) throws Exception{
+        BorrowDAL.returnItem(borrow);
+    }
+    
     public int searchMemberId(String name) throws Exception{
         return BorrowDAL.getMemberId(name);
+    }
+    
+    public ArrayList<Catalogue> searchBorrowedItem(String name) throws Exception{
+        return BorrowDAL.getBorrowedItem(name);
     }
 }

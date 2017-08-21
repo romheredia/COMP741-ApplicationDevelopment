@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class BookDAL extends BaseDAL {
 
     public static void addBook(Book book) throws Exception {
-        String sql = "call addBook(?,?,?,?,?,?,?,?,?)";
+        String sql = "call sp_addBook(?,?,?,?,?,?,?,?,?)";
         
         CallableStatement st = getStatement(sql);
 
@@ -39,7 +39,7 @@ public class BookDAL extends BaseDAL {
     }
 
     public static void updateBook(Book book) throws Exception {
-        String sql = "call updateBook(?,?,?,?,?,?,?,?,?,?)";
+        String sql = "call sp_updateBook(?,?,?,?,?,?,?,?,?,?)";
         
         CallableStatement st = getStatement(sql);
 
@@ -60,7 +60,7 @@ public class BookDAL extends BaseDAL {
     public static ArrayList<Catalogue> getAllBook() throws Exception {
         ArrayList<Catalogue> catalogueList = new ArrayList();
 
-        String sql = "call searchBook()";
+        String sql = "call sp_searchBook()";
         
         ResultSet rs = getStatement(sql).executeQuery();
 
@@ -75,7 +75,41 @@ public class BookDAL extends BaseDAL {
     public static ArrayList<Catalogue> getBookByTitle(String title) throws Exception {
         ArrayList<Catalogue> catalogueList = new ArrayList();
 
-        String sql = "call searchBookByTitle(?)";
+        String sql = "call sp_searchBookByTitle(?)";
+        
+        CallableStatement st = getStatement(sql);
+
+        st.setString(1, title);
+
+        ResultSet rs = st.executeQuery();
+
+        while (rs.next()) {
+            Book book = new Book(rs.getInt("catalogue_id"), rs.getInt("book_id"), rs.getString("author"), rs.getString("genre"), rs.getString("isbn"), rs.getString("title"), rs.getString("description"), rs.getString("release_date"), rs.getString("status"), rs.getString("note"), rs.getString("language"));
+            catalogueList.add(book);
+        }
+
+        return catalogueList;
+    }
+    
+    public static ArrayList<Catalogue> getAvailableBook() throws Exception{
+        ArrayList<Catalogue> catalogueList = new ArrayList();
+
+        String sql = "call sp_searchAvailableBook()";
+        
+        ResultSet rs = getStatement(sql).executeQuery();
+
+        while (rs.next()) {
+            Book book = new Book(rs.getInt("catalogue_id"), rs.getInt("book_id"), rs.getString("author"), rs.getString("genre"), rs.getString("isbn"), rs.getString("title"), rs.getString("description"), rs.getString("release_date"), rs.getString("status"), rs.getString("note"), rs.getString("language"));
+            catalogueList.add(book);
+        }
+
+        return catalogueList;
+    }
+    
+    public static ArrayList<Catalogue> getAvailableBookByTitle(String title) throws Exception{
+         ArrayList<Catalogue> catalogueList = new ArrayList();
+
+        String sql = "call sp_searchAvailableBookByTitle(?)";
         
         CallableStatement st = getStatement(sql);
 
@@ -92,7 +126,7 @@ public class BookDAL extends BaseDAL {
     }
 
     public static void deleteBook(int id) throws Exception {
-        String sql = "call deleteBook(?)";
+        String sql = "call sp_deleteBook(?)";
         
         CallableStatement st = getStatement(sql);
 

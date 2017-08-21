@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class DvdDAL extends BaseDAL {
 
     public static void addBookDvd(Dvd dvd) throws Exception {
-        String sql = "call addDvd(?,?,?,?,?,?,?,?,?)";
+        String sql = "call sp_addDvd(?,?,?,?,?,?,?,?,?)";
 
         CallableStatement st = getStatement(sql);
 
@@ -37,7 +37,7 @@ public class DvdDAL extends BaseDAL {
     }
 
     public static void updateDvd(Dvd dvd) throws Exception {
-        String sql = "call updateDvd(?,?,?,?,?,?,?,?,?,?)";
+        String sql = "call sp_updateDvd(?,?,?,?,?,?,?,?,?,?)";
 
         CallableStatement st = getStatement(sql);
 
@@ -58,7 +58,7 @@ public class DvdDAL extends BaseDAL {
     public static ArrayList<Catalogue> getAllDvd() throws Exception {
         ArrayList<Catalogue> catalogueList = new ArrayList();
 
-        String sql = "call searchDvd()";
+        String sql = "call sp_searchDvd()";
 
         ResultSet rs = getStatement(sql).executeQuery();
 
@@ -73,7 +73,41 @@ public class DvdDAL extends BaseDAL {
     public static ArrayList<Catalogue> getDvdByTitle(String title) throws Exception {
         ArrayList<Catalogue> catalogueList = new ArrayList();
 
-        String sql = "call searchDvdByTitle(?)";
+        String sql = "call sp_searchDvdByTitle(?)";
+
+        CallableStatement st = getStatement(sql);
+
+        st.setString(1, title);
+
+        ResultSet rs = st.executeQuery();
+
+        while (rs.next()) {
+            Dvd dvd = new Dvd(rs.getInt("catalogue_id"), rs.getInt("dvd_id"), rs.getString("distributor"), rs.getString("cast"), rs.getString("credits"), rs.getString("title"), rs.getString("description"), rs.getString("release_date"), rs.getString("status"), rs.getString("note"), rs.getString("language"));
+            catalogueList.add(dvd);
+        }
+
+        return catalogueList;
+    }
+    
+    public static ArrayList<Catalogue> getAvailableDvd() throws Exception {
+        ArrayList<Catalogue> catalogueList = new ArrayList();
+
+        String sql = "call sp_searchAvailableDvd()";
+
+        ResultSet rs = getStatement(sql).executeQuery();
+
+        while (rs.next()) {
+            Dvd dvd = new Dvd(rs.getInt("catalogue_id") ,rs.getInt("dvd_id"), rs.getString("distributor"), rs.getString("cast"), rs.getString("credits"), rs.getString("title"), rs.getString("description"), rs.getString("release_date"), rs.getString("status"), rs.getString("note"), rs.getString("language"));
+            catalogueList.add(dvd);
+        }
+
+        return catalogueList;
+    }
+
+    public static ArrayList<Catalogue> getAvailableDvdByTitle(String title) throws Exception {
+        ArrayList<Catalogue> catalogueList = new ArrayList();
+
+        String sql = "call sp_searchAvailableDvdByTitle(?)";
 
         CallableStatement st = getStatement(sql);
 
@@ -90,7 +124,7 @@ public class DvdDAL extends BaseDAL {
     }
 
     public static void deleteDvd(int id) throws Exception {
-        String sql = "call deleteDvd(?)";
+        String sql = "call sp_deleteDvd(?)";
 
         CallableStatement st = getStatement(sql);
 

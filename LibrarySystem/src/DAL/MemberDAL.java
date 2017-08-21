@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 public class MemberDAL extends BaseDAL {
 
     public static void addMember(Member member) throws Exception {
-        String sql = "call addMember(?,?,?,?,?,?,?,?,?)";
+        String sql = "call sp_addMember(?,?,?,?,?,?,?,?,?)";
 
         CallableStatement st = getStatement(sql);
 
@@ -42,7 +42,7 @@ public class MemberDAL extends BaseDAL {
     }
 
     public static void updateMember(Member member) throws Exception {
-        String sql = "call updateMember(?,?,?,?,?,?,?,?,?,?)";
+        String sql = "call sp_updateMember(?,?,?,?,?,?,?,?,?,?)";
 
         CallableStatement st = getStatement(sql);
 
@@ -63,7 +63,7 @@ public class MemberDAL extends BaseDAL {
     public static ArrayList<Person> getAllMember() throws Exception {
         ArrayList<Person> personList = new ArrayList();
 
-        String sql = "call searchMember()";
+        String sql = "call sp_searchMember()";
 
         ResultSet rs = getStatement(sql).executeQuery();
 
@@ -78,7 +78,7 @@ public class MemberDAL extends BaseDAL {
     public static ArrayList<Person> getMemberByName(String name) throws Exception {
         ArrayList<Person> personList = new ArrayList();
 
-        String sql = "call searchMemberByName(?)";
+        String sql = "call sp_searchMemberByName(?)";
 
         CallableStatement st = getStatement(sql);
 
@@ -95,7 +95,7 @@ public class MemberDAL extends BaseDAL {
     }
 
     public static void deactivateMember(int id) throws Exception {
-        String sql = "call deactivateMember(?)";
+        String sql = "call sp_deactivateMember(?)";
 
         CallableStatement st = getStatement(sql);
 
@@ -107,7 +107,7 @@ public class MemberDAL extends BaseDAL {
     public static ArrayList<String> getAllMemberName() throws Exception {
         ArrayList<String> personList = new ArrayList();
 
-        String sql = "call searchPerson()";
+        String sql = "call sp_searchPerson()";
 
         CallableStatement st = getStatement(sql);
 

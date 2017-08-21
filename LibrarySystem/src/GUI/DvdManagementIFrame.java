@@ -443,6 +443,12 @@ public class DvdManagementIFrame extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
+    /**
+     * Get data from the components of the panel
+     * @param dvd object to be filled
+     * @return filled dvd object
+     * @throws Exception 
+     */
     private Dvd getComponentData(Dvd dvd) throws Exception {
         dvd.setTitle(titleTextField.getText());
         dvd.setDescription(descriptionTextField.getText());
@@ -457,6 +463,11 @@ public class DvdManagementIFrame extends javax.swing.JInternalFrame {
         return dvd;
     }
 
+    /**
+     * Set data to the components of the panel
+     * @param dvd object that receives the data
+     * @throws Exception 
+     */
     private void setDataToComponent(Dvd dvd) throws Exception {
         titleTextField.setText(dvd.getTitle());
         descriptionTextField.setText(dvd.getDescription());

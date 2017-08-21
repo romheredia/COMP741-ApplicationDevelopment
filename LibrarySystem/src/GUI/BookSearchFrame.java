@@ -52,7 +52,7 @@ public class BookSearchFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         bookTable = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Search: ");
 
@@ -142,7 +142,7 @@ public class BookSearchFrame extends javax.swing.JFrame {
             //Get the selected book item
             selectedBook = (Book) listCatalogue.get(i);
             
-            //Add selected book to   table
+            //Add selected book to  table
             frame.addItem(selectedBook);
             
              //Close Book search window
@@ -168,7 +168,7 @@ public class BookSearchFrame extends javax.swing.JFrame {
             Catalogue catalogue = new Book();
             
             //Search the requested book
-            listCatalogue = bookTextField.getText().equals("") ? catalogue.Search() : catalogue.SearchByTitle(bookTextField.getText());
+            listCatalogue = bookTextField.getText().equals("") ? catalogue.SearchAvailableItems(): catalogue.SearchAvailableItemsByTitle(bookTextField.getText());
 
             //Add book data to the table
             for (Catalogue c : listCatalogue) {
