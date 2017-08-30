@@ -19,7 +19,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
     /**
      * Creates new form MainScreenView
      */
-    public ApplicationGUI() {        
+    public ApplicationGUI() {
         initComponents();
     }
 
@@ -176,6 +176,7 @@ public class ApplicationGUI extends javax.swing.JFrame {
 
     /**
      * Display frame to the application
+     *
      * @param frame to be displayed
      */
     private void getIFrame(JInternalFrame frame) {
