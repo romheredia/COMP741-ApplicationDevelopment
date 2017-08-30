@@ -7,8 +7,6 @@ package Model;
 
 import DAL.MemberDAL;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Hashtable;
 
 /**
  *

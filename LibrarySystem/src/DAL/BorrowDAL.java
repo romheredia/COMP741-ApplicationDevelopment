@@ -18,6 +18,11 @@ import java.util.ArrayList;
  * @author massami
  */
 public class BorrowDAL extends BaseDAL{
+    /**
+     * Save data of the borrowed transaction
+     * @param borrow information about the borrow
+     * @throws Exception 
+     */
     public static void addBorrow(Borrow borrow) throws Exception{ 
          String sql = "call sp_addBorrow(?,?,?,?,?)";
         
@@ -32,6 +37,11 @@ public class BorrowDAL extends BaseDAL{
         st.executeQuery();
     }
     
+    /**
+     * Save data of the returned item
+     * @param borrow data of the returned item
+     * @throws Exception 
+     */
     public static void returnItem(Borrow borrow ) throws Exception{
          String sql = "call sp_returnItem(?,?,?,?,?)";
         
@@ -46,6 +56,12 @@ public class BorrowDAL extends BaseDAL{
         st.executeQuery();
     }
     
+    /**
+     * Get the ID of the selected member
+     * @param name of the member
+     * @return id
+     * @throws Exception 
+     */
     public static int getMemberId(String name) throws Exception {
         String sql = "call sp_searchMemberId(?)";
 
@@ -61,6 +77,12 @@ public class BorrowDAL extends BaseDAL{
             return 0;
     }    
     
+    /**
+     * Get the items that were borrow by the members
+     * @param name 
+     * @return list of borrowed items
+     * @throws Exception 
+     */
     public static ArrayList<Catalogue> getBorrowedItem(String name) throws Exception{
         ArrayList<Catalogue> catalogueList = new ArrayList<Catalogue>();
         

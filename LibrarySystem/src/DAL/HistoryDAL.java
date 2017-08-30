@@ -16,6 +16,12 @@ import java.util.ArrayList;
  * @author massami
  */
 public class HistoryDAL extends BaseDAL{
+    /**
+     * Get the transaction history of the selected member
+     * @param name
+     * @return List of borrowed items
+     * @throws Exception 
+     */
     public static ArrayList<History> getTransactionHistory(String name) throws Exception{
         ArrayList<History> historyList = new ArrayList();
 

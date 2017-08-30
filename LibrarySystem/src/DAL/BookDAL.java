@@ -20,6 +20,11 @@ import java.util.ArrayList;
  */
 public class BookDAL extends BaseDAL {
 
+    /**
+     * Insert new book to the database
+     * @param book new object to be inserted
+     * @throws Exception 
+     */
     public static void addBook(Book book) throws Exception {
         String sql = "call sp_addBook(?,?,?,?,?,?,?,?,?)";
         
@@ -38,6 +43,11 @@ public class BookDAL extends BaseDAL {
         st.executeQuery();
     }
 
+    /**
+     * Update the information of the book
+     * @param book object to be updated
+     * @throws Exception 
+     */
     public static void updateBook(Book book) throws Exception {
         String sql = "call sp_updateBook(?,?,?,?,?,?,?,?,?,?)";
         
@@ -57,6 +67,11 @@ public class BookDAL extends BaseDAL {
         st.executeQuery();
     }
 
+    /**
+     * Get all the books
+     * @return all the  books
+     * @throws Exception 
+     */
     public static ArrayList<Catalogue> getAllBook() throws Exception {
         ArrayList<Catalogue> catalogueList = new ArrayList();
 
@@ -72,6 +87,12 @@ public class BookDAL extends BaseDAL {
         return catalogueList;
     }
 
+    /**
+     * Get the book filtered by the title
+     * @param title property to be searched
+     * @return list of books with the selected title
+     * @throws Exception 
+     */
     public static ArrayList<Catalogue> getBookByTitle(String title) throws Exception {
         ArrayList<Catalogue> catalogueList = new ArrayList();
 
@@ -91,6 +112,11 @@ public class BookDAL extends BaseDAL {
         return catalogueList;
     }
     
+    /**
+     * Get only the available books for borrowing
+     * @return list of available books
+     * @throws Exception 
+     */
     public static ArrayList<Catalogue> getAvailableBook() throws Exception{
         ArrayList<Catalogue> catalogueList = new ArrayList();
 
@@ -106,6 +132,12 @@ public class BookDAL extends BaseDAL {
         return catalogueList;
     }
     
+    /**
+     * Get available books by the filtered title
+     * @param title filter
+     * @return
+     * @throws Exception 
+     */
     public static ArrayList<Catalogue> getAvailableBookByTitle(String title) throws Exception{
          ArrayList<Catalogue> catalogueList = new ArrayList();
 
@@ -125,6 +157,11 @@ public class BookDAL extends BaseDAL {
         return catalogueList;
     }
 
+    /**
+     * Book logical delete
+     * @param id id of the book
+     * @throws Exception 
+     */
     public static void deleteBook(int id) throws Exception {
         String sql = "call sp_deleteBook(?)";
         
