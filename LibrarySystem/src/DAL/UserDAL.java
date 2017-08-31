@@ -16,7 +16,11 @@ import java.util.ArrayList;
  * @author massami
  */
 public class UserDAL extends BaseDAL {
-
+    /**
+     * Insert the user to the database
+     * @param user object to be inserted
+     * @throws Exception 
+     */
     public static void addUser(User user) throws Exception {
         String sql = "call sp_addUser(?,?,?,?,?,?)";
 
@@ -32,6 +36,11 @@ public class UserDAL extends BaseDAL {
         st.executeQuery();
     }
 
+    /**
+     * Update the information of the user
+     * @param user object to be updated
+     * @throws Exception 
+     */
     public static void updateUser(User user) throws Exception {
         String sql = "call sp_updateUser(?,?,?,?,?,?)";
 
@@ -47,6 +56,11 @@ public class UserDAL extends BaseDAL {
         st.executeQuery();
     }
 
+    /**
+     * Get list of users
+     * @return list of users
+     * @throws Exception 
+     */
     public static ArrayList<Person> getAllUser() throws Exception {
         ArrayList<Person> personList = new ArrayList();
 
@@ -62,6 +76,12 @@ public class UserDAL extends BaseDAL {
         return personList;
     }
 
+    /**
+     * Get list of users filtered by name
+     * @param name filter
+     * @return list of users
+     * @throws Exception 
+     */
     public static ArrayList<Person> getUserByName(String name) throws Exception {
         ArrayList<Person> personList = new ArrayList();
 
@@ -81,6 +101,11 @@ public class UserDAL extends BaseDAL {
         return personList;
     }
 
+    /**
+     * Deactivate the selected member
+     * @param id 
+     * @throws Exception 
+     */
     public static void deactivateUser(int id) throws Exception {
         String sql = "call sp_deactivateUser(?)";
 
@@ -91,6 +116,13 @@ public class UserDAL extends BaseDAL {
         st.executeQuery();
     }
 
+    /**
+     * Update the password of the user
+     * @param username
+     * @param password
+     * @param newPassword
+     * @throws Exception 
+     */
     public static void updatePassword(String username, String password, String newPassword) throws Exception {
         String sql = "call sp_updatePassword(?,?,?)";
 
@@ -103,6 +135,13 @@ public class UserDAL extends BaseDAL {
         st.executeQuery();
     }
 
+    /**
+     * Check if the password is correct
+     * @param username
+     * @param password
+     * @return 
+     * @throws Exception 
+     */
     public static ArrayList<Person> checkPassword(String username, String password) throws Exception {
         ArrayList<Person> personList = new ArrayList();
 
@@ -123,6 +162,11 @@ public class UserDAL extends BaseDAL {
         return personList;
     }
 
+    /**
+     * Reset the password of the member
+     * @param id
+     * @throws Exception 
+     */
     public static void resetPassword(int id) throws Exception {
         String sql = "call sp_resetPassword(?)";
 

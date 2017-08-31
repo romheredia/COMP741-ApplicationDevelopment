@@ -17,8 +17,12 @@ import java.util.ArrayList;
  * @author massami
  */
 public class DvdDAL extends BaseDAL {
-
-    public static void addBookDvd(Dvd dvd) throws Exception {
+    /**
+     * Insert DVD information to the database
+     * @param dvd
+     * @throws Exception 
+     */
+    public static void addDvd(Dvd dvd) throws Exception {
         String sql = "call sp_addDvd(?,?,?,?,?,?,?,?,?)";
 
         CallableStatement st = getStatement(sql);
@@ -36,6 +40,11 @@ public class DvdDAL extends BaseDAL {
         st.executeQuery();
     }
 
+    /**
+     * Update the information of the DVD to the database
+     * @param dvd
+     * @throws Exception 
+     */
     public static void updateDvd(Dvd dvd) throws Exception {
         String sql = "call sp_updateDvd(?,?,?,?,?,?,?,?,?,?)";
 
@@ -55,6 +64,11 @@ public class DvdDAL extends BaseDAL {
         st.executeQuery();
     }
 
+    /**
+     * Get the list of all DVDs 
+     * @return list of DVDs
+     * @throws Exception 
+     */
     public static ArrayList<Catalogue> getAllDvd() throws Exception {
         ArrayList<Catalogue> catalogueList = new ArrayList();
 
@@ -70,6 +84,12 @@ public class DvdDAL extends BaseDAL {
         return catalogueList;
     }
 
+    /**
+     * Get the list of DVDs filtered by the title
+     * @param title filter
+     * @return list of DVDs
+     * @throws Exception 
+     */
     public static ArrayList<Catalogue> getDvdByTitle(String title) throws Exception {
         ArrayList<Catalogue> catalogueList = new ArrayList();
 
@@ -89,6 +109,11 @@ public class DvdDAL extends BaseDAL {
         return catalogueList;
     }
     
+    /**
+     * Get the list of available DVDs for borrowing
+     * @return list of DVDs
+     * @throws Exception 
+     */
     public static ArrayList<Catalogue> getAvailableDvd() throws Exception {
         ArrayList<Catalogue> catalogueList = new ArrayList();
 
@@ -104,6 +129,12 @@ public class DvdDAL extends BaseDAL {
         return catalogueList;
     }
 
+    /**
+     * Get the list of available DVDs filtered by title
+     * @param title filter
+     * @return list of DVDs
+     * @throws Exception 
+     */
     public static ArrayList<Catalogue> getAvailableDvdByTitle(String title) throws Exception {
         ArrayList<Catalogue> catalogueList = new ArrayList();
 
@@ -123,6 +154,11 @@ public class DvdDAL extends BaseDAL {
         return catalogueList;
     }
 
+    /**
+     * Local delete of the DVD object
+     * @param id
+     * @throws Exception 
+     */
     public static void deleteDvd(int id) throws Exception {
         String sql = "call sp_deleteDvd(?)";
 

@@ -11,5 +11,4 @@ package Shared;
  */
 public class SharedData {
     public static String username;
-    public static String profile;
 }

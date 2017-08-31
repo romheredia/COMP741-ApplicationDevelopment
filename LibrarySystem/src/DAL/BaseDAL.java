@@ -19,6 +19,11 @@ public class BaseDAL {
     private static final String DATABASE_NAME = "jdbc:mysql://localhost:3306/librarysystem_db?useSSL=false, root, root";
     static Connection con;
     
+    /**
+     * Get the configuration for the data base connection
+     * @return the connection to the database
+     * @throws Exception 
+     */
     public static Connection getConnection() throws Exception {
         try {
             if (con == null) {
@@ -32,6 +37,12 @@ public class BaseDAL {
         }
     }
     
+    /**
+     * Prepare the call to the database
+     * @param sql Query
+     * @return statement 
+     * @throws Exception 
+     */
     public static CallableStatement getStatement(String sql) throws Exception{
         Connection con = getConnection();
         

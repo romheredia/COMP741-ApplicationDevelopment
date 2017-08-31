@@ -78,7 +78,7 @@ public class Dvd extends Catalogue {
     
     @Override
     public void Add() throws Exception{
-        DvdDAL.addBookDvd(this);
+        DvdDAL.addDvd(this);
     }
     
     @Override

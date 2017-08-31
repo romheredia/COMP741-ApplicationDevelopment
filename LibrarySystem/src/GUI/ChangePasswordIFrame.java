@@ -248,6 +248,7 @@ public class ChangePasswordIFrame extends javax.swing.JInternalFrame {
     private void getUsername(){
         usernameLabel.setText(SharedData.username);
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton changePasswordButton;

@@ -22,7 +22,11 @@ import java.util.logging.Logger;
  * @author Rom
  */
 public class MemberDAL extends BaseDAL {
-
+    /**
+     * Insert the member to the database
+     * @param member selected member
+     * @throws Exception 
+     */
     public static void addMember(Member member) throws Exception {
         String sql = "call sp_addMember(?,?,?,?,?,?,?,?,?)";
 
@@ -41,6 +45,11 @@ public class MemberDAL extends BaseDAL {
         st.executeQuery();
     }
 
+    /**
+     * Update the information of the member
+     * @param member object to be updated
+     * @throws Exception 
+     */
     public static void updateMember(Member member) throws Exception {
         String sql = "call sp_updateMember(?,?,?,?,?,?,?,?,?,?)";
 
@@ -60,6 +69,11 @@ public class MemberDAL extends BaseDAL {
         st.executeQuery();
     }
 
+    /**
+     * Get the list of members
+     * @return list of members
+     * @throws Exception 
+     */
     public static ArrayList<Person> getAllMember() throws Exception {
         ArrayList<Person> personList = new ArrayList();
 
@@ -75,6 +89,12 @@ public class MemberDAL extends BaseDAL {
         return personList;
     }
 
+    /**
+     * Get the list of members filtered by the name
+     * @param name filter
+     * @return list of members
+     * @throws Exception 
+     */
     public static ArrayList<Person> getMemberByName(String name) throws Exception {
         ArrayList<Person> personList = new ArrayList();
 
@@ -94,6 +114,11 @@ public class MemberDAL extends BaseDAL {
         return personList;
     }
 
+    /**
+     * Deactivation of the selected member
+     * @param id
+     * @throws Exception 
+     */
     public static void deactivateMember(int id) throws Exception {
         String sql = "call sp_deactivateMember(?)";
 
@@ -104,6 +129,11 @@ public class MemberDAL extends BaseDAL {
         st.executeQuery();
     }
 
+    /**
+     * Get the list of members filtered by name
+     * @return list of members filtered by the name
+     * @throws Exception 
+     */
     public static ArrayList<String> getAllMemberName() throws Exception {
         ArrayList<String> personList = new ArrayList();
 

@@ -8,18 +8,12 @@ package GUI;
 import Model.Book;
 import Model.Borrow;
 import Model.Catalogue;
-import Model.Dvd;
 import Model.Member;
-import Model.Person;
 import Utility.GUIUtility;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Vector;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
