@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import Shared.SharedData;
 import javax.swing.JInternalFrame;
 
 /**
@@ -18,6 +19,10 @@ public class ApplicationGUI extends javax.swing.JFrame {
      */
     public ApplicationGUI() {
         initComponents();
+
+        if (!SharedData.username.equals("admin")) {
+            userManagementMenuItem.hide();
+        }
     }
 
     /**
