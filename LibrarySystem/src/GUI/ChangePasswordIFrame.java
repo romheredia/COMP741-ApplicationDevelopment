@@ -39,15 +39,15 @@ public class ChangePasswordIFrame extends javax.swing.JInternalFrame {
         changePasswordPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        passwordTextField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        confirmPasswordTextField = new javax.swing.JTextField();
-        newPasswordTextField = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         changePasswordButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         usernameLabel = new javax.swing.JLabel();
+        passwordTextField = new javax.swing.JPasswordField();
+        newPasswordTextField = new javax.swing.JPasswordField();
+        confirmPasswordTextField = new javax.swing.JPasswordField();
 
         setClosable(true);
         setTitle("Change Password");
@@ -103,18 +103,18 @@ public class ChangePasswordIFrame extends javax.swing.JInternalFrame {
                             .addComponent(jLabel1))
                         .addGap(85, 85, 85)
                         .addGroup(changePasswordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(passwordTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                             .addGroup(changePasswordPanelLayout.createSequentialGroup()
                                 .addComponent(usernameLabel)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(passwordTextField)))
                     .addGroup(changePasswordPanelLayout.createSequentialGroup()
                         .addGroup(changePasswordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addComponent(jLabel8))
                         .addGap(29, 29, 29)
                         .addGroup(changePasswordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(confirmPasswordTextField)
-                            .addComponent(newPasswordTextField))))
+                            .addComponent(newPasswordTextField)
+                            .addComponent(confirmPasswordTextField))))
                 .addGap(20, 20, 20))
         );
         changePasswordPanelLayout.setVerticalGroup(
@@ -129,10 +129,10 @@ public class ChangePasswordIFrame extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(passwordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(changePasswordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(changePasswordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(newPasswordTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(newPasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
                 .addGroup(changePasswordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(confirmPasswordTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -253,14 +253,14 @@ public class ChangePasswordIFrame extends javax.swing.JInternalFrame {
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton changePasswordButton;
     private javax.swing.JPanel changePasswordPanel;
-    private javax.swing.JTextField confirmPasswordTextField;
+    private javax.swing.JPasswordField confirmPasswordTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField newPasswordTextField;
-    private javax.swing.JTextField passwordTextField;
+    private javax.swing.JPasswordField newPasswordTextField;
+    private javax.swing.JPasswordField passwordTextField;
     private javax.swing.JLabel usernameLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -337,11 +337,11 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
             //Get the current selected table row
             int i = borrowTable.getSelectedRow();
 
-            //Get the selected book item
-            Book selectedBook = (Book) listCatalogue.get(i);
+            //Get the selected item
+            Catalogue selectedCatalogue = listCatalogue.get(i);
 
-            //remove selected book from collection
-            listCatalogue.remove(selectedBook);
+            //remove selected item from collection
+            listCatalogue.remove(selectedCatalogue);
 
             //Update the table content
             updateTable();
