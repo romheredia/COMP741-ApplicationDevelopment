@@ -9,6 +9,7 @@ import Model.Book;
 import Model.Borrow;
 import Model.Catalogue;
 import Model.Member;
+import Model.Person;
 import Utility.GUIUtility;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
 
     List<Catalogue> listCatalogue = new ArrayList();
+    List<Person> listPerson = new ArrayList();
     ArrayList<String> memberList = new ArrayList();
 
     /**
@@ -31,8 +33,6 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
      */
     public BorrowManagementIFrame() {
         initComponents();
-
-        LoadComboBox();
 
         LoadTable();
     }
@@ -59,11 +59,12 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
         titleTextField = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         IdTextField = new javax.swing.JTextField();
-        memberComboBox = new javax.swing.JComboBox<>();
         addBookButton = new javax.swing.JButton();
         removeBookButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         addDvdButton = new javax.swing.JButton();
+        memberButton = new javax.swing.JButton();
+        memberTextField = new javax.swing.JTextField();
 
         setClosable(true);
         setTitle("Borrow Management");
@@ -182,12 +183,6 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        memberComboBox.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                memberComboBoxItemStateChanged(evt);
-            }
-        });
-
         addBookButton.setText("Add Book");
         addBookButton.setPreferredSize(new java.awt.Dimension(100, 40));
         addBookButton.addActionListener(new java.awt.event.ActionListener() {
@@ -215,6 +210,15 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
             }
         });
 
+        memberButton.setText("Choose member");
+        memberButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                memberButtonActionPerformed(evt);
+            }
+        });
+
+        memberTextField.setEditable(false);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -223,21 +227,25 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(addDvdButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(addBookButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(removeBookButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(memberComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(addDvdButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(addBookButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(removeBookButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(8, 8, 8))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(memberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(memberButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)))
                 .addComponent(borrowPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,8 +254,9 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(memberComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
+                            .addComponent(jLabel3)
+                            .addComponent(memberButton)
+                            .addComponent(memberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(borrowPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -269,7 +278,7 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -286,7 +295,7 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
                     Borrow borrow = new Borrow();
 
                     //Get the member id
-                    int memberId = borrow.searchMemberId(memberComboBox.getSelectedItem().toString());
+                    int memberId = borrow.searchMemberId(memberTextField.getText());
 
                     //Get the id of the item
                     int catalogueId = Integer.parseInt(IdTextField.getText());
@@ -379,7 +388,7 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
                 Borrow borrow = new Borrow();
 
                 //Get the member id
-                int memberId = borrow.searchMemberId(memberComboBox.getSelectedItem().toString());
+                int memberId = borrow.searchMemberId(memberTextField.getText());
 
                 //Get the id of the item
                 int catalogueId = Integer.parseInt(IdTextField.getText());
@@ -416,18 +425,10 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_returnButtonActionPerformed
 
-    private void memberComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_memberComboBoxItemStateChanged
-        try {
-            //Load the table with the items of the member
-            LoadTable();
-
-            //update the items of the table
-            updateTable();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-
-    }//GEN-LAST:event_memberComboBoxItemStateChanged
+    private void memberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberButtonActionPerformed
+        MemberSearchFrame frame = new MemberSearchFrame(this);
+        frame.setVisible(true);
+    }//GEN-LAST:event_memberButtonActionPerformed
 
     /**
      * Load data to the components of the panel
@@ -437,22 +438,6 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
     private void setDataToComponent(Catalogue c) {
         IdTextField.setText(String.valueOf(c.getId()));
         titleTextField.setText(c.getTitle());
-    }
-
-    /**
-     * Load ComboBox with the members
-     */
-    private void LoadComboBox() {
-        try {
-            Member member = new Member();
-
-            memberList = member.SearchMemberName();
-
-            memberComboBox.setModel((new DefaultComboBoxModel(memberList.toArray())));
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
     }
 
     /**
@@ -497,6 +482,26 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
     }
 
     /**
+     * Add member to the text field
+     *
+     * @param p
+     */
+    public void addMember(Person p) {
+        try {
+            //Set the component with the name of the member
+            memberTextField.setText(p.getFirstName() + " " + p.getLastName());
+
+            //Load the table with the items of the member
+            LoadTable();
+
+            //update the items of the table
+            updateTable();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+    /**
      * Load the table with items of the member
      */
     public void LoadTable() {
@@ -505,7 +510,7 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
             Borrow borrow = new Borrow();
 
             //Search the transaction book of the user
-            listCatalogue = borrow.searchBorrowedItem(memberComboBox.getSelectedItem().toString());
+            listCatalogue = borrow.searchBorrowedItem(memberTextField.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
@@ -526,7 +531,8 @@ public class BorrowManagementIFrame extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JComboBox<String> memberComboBox;
+    private javax.swing.JButton memberButton;
+    private javax.swing.JTextField memberTextField;
     private javax.swing.JButton removeBookButton;
     private javax.swing.JButton returnButton;
     private javax.swing.JTextField titleTextField;

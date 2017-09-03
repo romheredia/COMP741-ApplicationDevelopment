@@ -16,7 +16,7 @@ import java.sql.SQLException;
  * @author massami
  */
 public class BaseDAL {
-    private static final String DATABASE_NAME = "jdbc:mysql://localhost:3306/librarysystem_db?useSSL=false, root, root";
+    //private static final String DATABASE_NAME = "jdbc:mysql://localhost:3306/librarysystem_db?useSSL=false, root, root";
     static Connection con;
     
     /**

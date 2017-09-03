@@ -5,9 +5,13 @@
  */
 package GUI;
 
+import Model.Borrow;
+import Model.Catalogue;
 import Model.History;
 import Model.Member;
+import Model.Person;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,15 +23,14 @@ import javax.swing.table.DefaultTableModel;
 public class TransactionHistory extends javax.swing.JFrame {
 
     ArrayList<String> memberList = new ArrayList();
+    List<Catalogue> listCatalogue = new ArrayList();
     ArrayList<History> listHistory = new ArrayList();
-    
+
     /**
      * Creates new form TransactionHistory
      */
     public TransactionHistory() {
         initComponents();
-        
-        LoadComboBox();
     }
 
     /**
@@ -41,23 +44,14 @@ public class TransactionHistory extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        memberComboBox = new javax.swing.JComboBox<>();
-        searchButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         transactionTable = new javax.swing.JTable();
+        memberTextField = new javax.swing.JTextField();
+        memberButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Search member:");
-
-        memberComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        searchButton.setText("Search");
-        searchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchButtonActionPerformed(evt);
-            }
-        });
 
         transactionTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -77,6 +71,15 @@ public class TransactionHistory extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(transactionTable);
 
+        memberTextField.setEditable(false);
+
+        memberButton.setText("Choose member");
+        memberButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                memberButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -88,9 +91,9 @@ public class TransactionHistory extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(memberComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(memberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(memberButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -99,8 +102,8 @@ public class TransactionHistory extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(memberComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchButton))
+                    .addComponent(memberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(memberButton))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
                 .addContainerGap())
@@ -113,7 +116,7 @@ public class TransactionHistory extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(169, 169, 169))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,9 +129,33 @@ public class TransactionHistory extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+    private void memberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_memberButtonActionPerformed
+        MemberSearchFrame frame = new MemberSearchFrame(this);
+        frame.setVisible(true);
+    }//GEN-LAST:event_memberButtonActionPerformed
+
+    /**
+     * Add member to the text field
+     * @param p
+     */
+    public void addMember(Person p) {
         try {
-            //Get the model of the table
+            //Set the component with the name of the member
+            memberTextField.setText(p.getFirstName() + " " + p.getLastName());
+
+            //Load the table with the items of the member
+            LoadTable();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+    /**
+     * Load the table with items of the member
+     */
+    public void LoadTable() {
+        try {
+                       //Get the model of the table
             DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
 
             //Clean the table content
@@ -141,7 +168,7 @@ public class TransactionHistory extends javax.swing.JFrame {
             History history = new History();
 
             //Search the requested book
-            listHistory = history.searchTransactionHistory(memberComboBox.getSelectedItem().toString());
+            listHistory = history.searchTransactionHistory(memberTextField.getText());
 
             //Add book data to the table
             for (History h : listHistory) {
@@ -151,26 +178,11 @@ public class TransactionHistory extends javax.swing.JFrame {
                 model.addRow(rows);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,e.getMessage());
-        }
-    }//GEN-LAST:event_searchButtonActionPerformed
-
-    /**
-     * Load members data to the combobox
-     */
-      private void LoadComboBox() {
-        try {
-            Member member = new Member();
-
-            memberList = member.SearchMemberName();
-
-            memberComboBox.setModel((new DefaultComboBoxModel(memberList.toArray())));
-
-        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
-      
+
+   
     /**
      * @param args the command line arguments
      */
@@ -210,8 +222,8 @@ public class TransactionHistory extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JComboBox<String> memberComboBox;
-    private javax.swing.JButton searchButton;
+    private javax.swing.JButton memberButton;
+    private javax.swing.JTextField memberTextField;
     private javax.swing.JTable transactionTable;
     // End of variables declaration//GEN-END:variables
 }
